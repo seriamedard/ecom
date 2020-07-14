@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="{% static 'boutique/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'boutique/css/app.css' %}">
+    <link href="//db.onlinewebfonts.com/c/02a0efa4275f78836dfc89db9e21feea?family=Futura+Book" rel="stylesheet" type="text/css"/>
+    <link href="//db.onlinewebfonts.com/c/4bfead3a244dd227921e53b4d31c36ed?family=AltonaBold" rel="stylesheet" type="text/css"/>
+    <title> {% block title %}base{% endblock %}</title>
+</head>
+<body>
+    <!--En-tête-->
+   <div class="hearder container">
+       <div class="row header-haut pt-1">
+            <div class="message ml-3">
+                <p>Bienvenu(e) chez soma-electronic !</p>
+            </div>
+            <div class="liens-raccourcis">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">Boutique</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">NewsLetter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Faq</a>
+                    </li>
+                    <li class="nav-item dropdown"> 
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Langue
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a href="#" class="dropdown-item active">fr-Fr</a>
+                            <a href="#" class="dropdown-item">en-EN</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+       </div>
+       <hr class="mt-1 h-100">
+   </div>
+   
+   <!--sous en-tête-->
+   <div class="container ">
+        <div class="navigation">
+            <nav class="navbar navbar-expand-lg pl-0">
+                <a href="{% url 'boutique:accueil' %}" class="navbar-brand">
+                    <img classe="logo" width="65" height="65" src="{% static 'boutique/img/logo.png' %}" alt="logo soma-electronic">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"> 
+                        <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-filter-right" fill="#3a3e59" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/>
+                        </svg>
+                    </span>
+   
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="navig-plus mr-auto">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Entrer un produit" aria-label="Search">
+                            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Recherche</button>
+                        </form>
+                    </div>
+                    <div class="users d-flex  flex-wrap mt-sm-3 mt-lg-0">
+                        <!--compte-->
+                        <div class="compte d-flex align-items-center mr-3">
+                            <a href="#" class="align-self-center icon ">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person" fill="#3a3e59" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                </svg>
+                            </a>
+                            <div class="profil d-flex flex-column mt-n3 ml-n1">
+                                <div class="dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Mon compte
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="#">mon compte</a>
+                                        <a class="dropdown-item" href="#">se connecter</a>
+                                        <a class="dropdown-item" href="#">s'inscrire</a>
+                                    </div>
+                                </div>
+                                <div class="mx-auto mt-n2"><a href="#">connexion</a></div>
+                            </div>
+                        </div>
+                        <!--panier-->
+                       <div class="panier d-flex align-items-center">
+                            <a href="" class="icon align-self-center">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart3" fill="#3a3e59" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                </svg>
+    
+                            </a>
+                            <!--quantité dans le panier-->
+                            <span class=" ml-n3 mt-n5 badge badge-primary">50</span>
+                            <div class="ml-2 d-block">
+                                <p class="mb-n1">Panier:</p>
+                                <!--Prix total-->
+                                <p class="font-weight-bold mt-auto">1000 FCFA</p>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+   </div>
+
+    <!--bar categorie-->
+    <!--block content-->
+    
+   <div class="container-fluid bg-dark">
+        <div class="container">
+            <nav class="categories navbar navbar-expand-lg text-white">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon ml-n4">
+                        <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-card-list" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                            <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
+                            <circle cx="3.5" cy="5.5" r=".5"/>
+                            <circle cx="3.5" cy="8" r=".5"/>
+                            <circle cx="3.5" cy="10.5" r=".5"/>
+                        </svg>
+                    </span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="row ">
+                        <div class="col d-inline-flex align-items-center ml-n3">
+                            <h3 class="mr-5">Categories</h3>
+                            <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-card-list" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
+                                <circle cx="3.5" cy="5.5" r=".5"/>
+                                <circle cx="3.5" cy="8" r=".5"/>
+                                <circle cx="3.5" cy="10.5" r=".5"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <!--les elements contenues dans categorie-->
+                    {% block cat %}
+                    <ul class="navbar-nav ">
+                                       
+                        <li class="nav-item dropdown mr-3">
+                            <a href="" class="nav-link ml-n3 dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ordinateurs</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            
+                                <a href="" class="dropdown-item">Apple</a>
+                            
+                            </div>
+                        </li>
+                        
+                    {% endblock %}
+                </div>
+            </nav>
+
+        </div>
+   </div>
+   <!--fin block-->
+   <!--blok sous menue-->
+   <div class="container">
+       <div class="elements d-flex">
+           <div class="sous-categorie d-md-flex flex-column d-none list-group" id="souscategorie">
+                {% block souscategorie %}
+                <a class="list-group-item" href="">Apple</a>
+                <a class="list-group-item" href="">Samsung</a>
+                <a class="list-group-item" href="">Nokia</a>
+                {% endblock %}
+           </div>
+           <div class="produits ml-3">
+               <!--carousell promo-->
+               {% block carousel %}
+               <div id="carouselExampleControls" class="carousel slide d-none d-md-block" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item">
+                            <img src="C:\Users\asus\Documents\Projet\Django\ecom\media\images\photo.jpg" class="d-block w-100 " height="400rem" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>First slide label</h5>
+                                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="carousel-item">
+                            <img src="C:\Users\asus\Documents\Projet\Django\ecom\media\images\photo.jpg" class="d-block w-100 " height="400rem" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>First slide label</h5>
+                                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Précédent</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Suivant</span>
+                    </a>
+                </div>
+              {% endblock %}
+              <!--produits-->
+              {% block produit %}
+              <div class="listes-des-produits mt-4" id=produit >
+                    <div class="row">
+                        
+                        <div class="col-sm-12 col-lg-4">
+                            <div class="card mb-3" >
+                                <img src="C:\Users\asus\Documents\Projet\Django\ecom\media\images\photo.jpg" class="card-img-top rounded" alt="...">
+                                <div class="card-body">
+                                <h5 class="card-title">Iphone</h5>
+                                <p class="card-text">
+                                    <h3><del>100000 FCFA</del><span class="badge badge-secondary ml-3">-20%</span></h3>
+
+                                    <h2>800000Fcfa</h2>
+                                    </p>
+                                <a href="#" class="btn btn-primary">Acheter</a>
+                                <a href="#" class="btn btn-primary ">+ Panier</a>
+                                <a href="#" class="stretched-link ml-auto ml-lg-3">
+                                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-card-list" fill="#ed6b5b" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                        <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
+                                        <circle cx="3.5" cy="5.5" r=".5"/>
+                                        <circle cx="3.5" cy="8" r=".5"/>
+                                        <circle cx="3.5" cy="10.5" r=".5"/>
+                                    </svg>
+                                </a>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                  
+              </div>
+              {% endblock %}
+           </div>
+       </div>
+   </div>
+
+   <!--Option javascrpt-->
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>

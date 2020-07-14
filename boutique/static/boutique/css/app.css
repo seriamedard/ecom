@@ -1,0 +1,26 @@
+
+/* mise en pade du header */
+.header-haut{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.header-haut .message{
+    align-self: center;
+}
+
+/*sous header*/
+.navbar-brand img .logo{
+    height: 20px;
+}
+
+.users .icon{
+    border: #3a3e59 solid 1px;
+    border-radius: 10%;
+    padding: 0.5em;
+}
+.card:hover{
+    box-shadow: #3a3e59 0px 0px 1px;
+}
