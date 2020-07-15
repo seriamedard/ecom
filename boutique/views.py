@@ -20,12 +20,6 @@ class ListeProduit(ListView):
         context['devise'] = self.devise
 
 
-# Promotion
-class Promo(ListeProduit):
-    template_name = 'boutique/promo.html'
-    def get_queryset(self):
-        return Produit.objects.filter(disponible=True, promotion=True).order_by('-date_de_creation')
-
 class ListeCategorie(ListView):
     model = Categorie
     context_object_name = 'liste_categories'
@@ -54,12 +48,20 @@ class DetailProduit(DetailView):
     model = Produit
     context_object_name = 'un_produit'
     template_name = 'boutique/detail.html'
+    devise = "FCFA"
     
     def get_object(self):
         un_produit = super(DetailProduit, self).get_object()
         un_produit.etoile +=1
         un_produit.save()
         return un_produit
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailProduit, self).get_context_data(**kwargs)
+        context['liste_categories'] = Categorie.objects.all()
+        context['liste_sous_categories'] = SousCategorie.objects.all()  
+        context['devise'] = self.devise
+        return context
 
 
 #Accueil
@@ -70,6 +72,8 @@ def accueil(request):
     liste_produits = Produit.objects.filter(disponible=True).order_by('-date_de_creation')[:20]
     liste_categories = Categorie.objects.all()
     liste_sous_categories = SousCategorie.objects.all().order_by('nom')
+    liste_produits_promo = Produit.objects.filter(disponible=True, promotion=True).order_by('-date_de_creation')
+    devise = "FCFA"
     return render(request, 'boutique/index.html', locals())
 
 #Vue recherche

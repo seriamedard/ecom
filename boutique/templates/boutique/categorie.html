@@ -2,10 +2,11 @@
 <ul class="navbar-nav ">
     {% for cat in liste_categories %}                
     <li class="nav-item dropdown mx-3">
-        <a href="" class="nav-link ml-n3 dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ cat.nom }}</a>
+        <a href="" class="nav-link ml-n3 dropdown-toggle text-white lien-categorie" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ cat.nom }}</a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a href="" class="dropdown-item">Apple</a>
-            <a href="" class="dropdown-item">Apple</a>
+            {% for sous_cat in cat.souscategorie.all %}
+            <a href="" class="dropdown-item">{{ sous_cat }}</a>
+            {% endfor %}
         </div>
     </li>
     {% endfor %}

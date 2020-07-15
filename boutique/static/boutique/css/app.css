@@ -24,3 +24,7 @@
 .card:hover{
     box-shadow: #3a3e59 0px 0px 1px;
 }
+
+.nav .lien-categorie:hover{
+    opacity: 0.6;
+}
