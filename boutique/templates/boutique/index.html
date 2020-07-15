@@ -1,3 +1,19 @@
 {% extends 'boutique/base.html' %}
 
 {% block title %}Accueil{% endblock %}
+
+{% block cat %}
+    {% include 'boutique/categorie.html' %}
+{% endblock %}
+
+{% block souscategorie %}
+    {% include 'boutique/sous_produit.html' %}
+{% endblock %}
+
+{% block carousel %}
+    {% include 'boutique/promo.html' %}
+{% endblock %}
+
+{% block produit %}
+    {% include 'boutique/liste.html' %}
+{% endblock %}

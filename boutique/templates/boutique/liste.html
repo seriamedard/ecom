@@ -1,0 +1,29 @@
+
+<div class="row"> 
+    {% for produit in liste_produits %}
+    <div class="col-sm-12 col-lg-4">
+        <div class="card mb-3" >
+            <img src="{{ produit.image.url }}" class="card-img-top rounded" alt="{{ produit.nom}}">
+            <div class="card-body">
+            <h5 class="card-title">{{ produit.nom}}</h5>
+            <p class="card-text">
+                <h3><del>{{ produit.premier_prix }} {{devise}}</del><span class="badge badge-secondary ml-3">-{{ produit.reduction }}</span></h3>
+
+                <h2>{{ produit.prix }} {{devise}}</h2>
+                </p>
+            <a href="#" class="btn btn-primary">Acheter</a>
+            <a href="#" class="btn btn-primary ">+ Panier</a>
+            <a href="#" class="stretched-link ml-auto ml-lg-3">
+                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-card-list" fill="#ed6b5b" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                    <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
+                    <circle cx="3.5" cy="5.5" r=".5"/>
+                    <circle cx="3.5" cy="8" r=".5"/>
+                    <circle cx="3.5" cy="10.5" r=".5"/>
+                </svg>
+            </a>
+            </div>
+        </div>
+    </div> 
+    {% endfor %}
+</div>
