@@ -23,7 +23,30 @@ class SousCategorieAdmin(admin.ModelAdmin):
 @admin.register(Produit)
 class ProduitAdmin(admin.ModelAdmin):
     #inlines = [SousCategorieInline,]
+    fields = (
+        'nom', 
+        'description', 
+        'quantite', 
+        'disponible', 
+        'promotion',
+        'etoile',
+        'premier_prix',
+        'prix',
+        'taux_reduction',
+        'slug',
+        'image',
+        'sous_categorie',
+        'categorie' 
+        )
+    search_fields = ('nom', 'sous_categorie')
     prepopulated_fields = {"slug": ("nom",)}
+
+    def reduction(self, produit):
+        self.taux = 1 - (produit.prix / produit.premier_prix)
+        produit.taux_reduction = self.taux
+        return produit.taux_reduction
+    
+
 
 
 

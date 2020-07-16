@@ -1,5 +1,5 @@
 {% for sous_cat in liste_sous_categories %}
-    <a style="width: 12.2rem;" class="list-group-item" href="{% url 'boutique:categorie_produit' id=sous_cat.id %}">{{sous_cat}}</a>
+    <a style="width: 12.2rem;" class="list-group-item" href="{% url 'boutique:sous_categorie_produit' id_sous_categorie=sous_cat.id %}">{{sous_cat}}</a>
 {% endfor %}
 <!-- {% block prod%}
     {% include 'boutique/liste.html' %}

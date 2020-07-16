@@ -5,7 +5,7 @@
         <a href="" class="nav-link ml-n3 dropdown-toggle text-white lien-categorie" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ cat.nom }}</a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             {% for sous_cat in cat.souscategorie.all %}
-            <a href="" class="dropdown-item">{{ sous_cat }}</a>
+            <a href="{% url 'boutique:categorie_liste_produit' id_categorie=cat.id id_sous_categorie=sous_cat.id %}" class="dropdown-item">{{ sous_cat }}</a>
             {% endfor %}
         </div>
     </li>
