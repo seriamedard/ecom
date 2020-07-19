@@ -25,7 +25,7 @@ SECRET_KEY = 'tbwiiy^g@tb-!z+qu0qhhlqn6_%u+sife#5pl=o385=5=cej&('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'boutique',
     'debug_toolbar',
 ]
@@ -65,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'ecom.context_processors.get_variable',
             ],
         },
     },
@@ -115,6 +117,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+USE_THOUSAND_SEPARATOR = True
 
 INTERNAL_IPS = [
     '127.0.0.1',

@@ -1,0 +1,36 @@
+<!-- Button trigger modal -->
+<a   href="{% url 'boutique:newsletter' %}" data-toggle="modal" data-target="#exampleModal">
+    Newsletter
+</a>
+  
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">
+                    <h5>Abonnez vous à notre newsletter</h5>
+                    <p>Pour être au courant des nouveaux produits de haute gamme.</p>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <form action="">
+            <div class="modal-body">
+                
+                <div class="form-group">
+                    <input class="form-control" id="exampleFormControlTextarea1" placeholder="Prenom" rows="3"></input>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email Adress">
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button> -->
+                <a href="" class="btn btn-primary" type="submit">Je m'inscrits</a>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>

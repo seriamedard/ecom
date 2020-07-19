@@ -14,29 +14,40 @@
 </head>
 <body>
     <!--En-tête-->
-   <div class="hearder container">
+   <div class="hearder container mb-1">
        <div class="row header-haut pt-1">
+           {% block salut %}
             <div class="message ml-3">
                 <p>Bienvenu(e) chez soma-electronic !</p>
             </div>
-            <div class="liens-raccourcis">
-                <ul class="nav">
+            {% endblock%}
+            <div class="liens-raccourcis ml-md-auto ml-0">
+                <ul class="nav align-items-center">
                     <li class="nav-item">
                         <a href="{% url 'boutique:boutique' %}" class="nav-link active">Boutique</a>
                     </li>
                     <li class="nav-item">
+                        {% block newsletter %}
                         <a href="#" class="nav-link">NewsLetter</a>
+                        {% endblock %}
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">Faq</a>
                     </li>
                     <li class="nav-item dropdown"> 
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Langue
+                        Fcfa
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a href="?devise='FCFA'" class="dropdown-item active">FCFA</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown"> 
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Fr
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a href="#" class="dropdown-item active">fr-Fr</a>
-                            <a href="#" class="dropdown-item">en-EN</a>
                         </div>
                     </li>
                 </ul>
@@ -46,12 +57,26 @@
    </div>
    
    <!--sous en-tête-->
-   <div class="container ">
+   <div class="container">
         <div class="navigation">
             <nav class="navbar navbar-expand-lg pl-0">
                 <a href="{% url 'boutique:accueil' %}" class="navbar-brand">
                     <img classe="logo" width="65" height="65" src="{% static 'boutique/img/logo.png' %}" alt="logo soma-electronic">
                 </a>
+                <div class="navig-plus mr-auto">
+                    {%block search%}
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Entrer un produit" aria-label="Search">
+                        <div class="btn btn-outline-primary my-2 my-sm-0 d-md-none">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                              </svg>
+                        </div>
+                        <button class="btn btn-outline-primary my-2 my-sm-0 d-none d-md-blok" type="submit">Recherche</button>
+                    </form>
+                    {%endblock%}
+                </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"> 
                         <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-filter-right" fill="#3a3e59" xmlns="http://www.w3.org/2000/svg">
@@ -61,15 +86,8 @@
    
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="navig-plus mr-auto">
-                        {%block search%}
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Entrer un produit" aria-label="Search">
-                            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Recherche</button>
-                        </form>
-                        {%endblock%}
-                    </div>
-                    <div class="users d-flex  flex-wrap mt-sm-3 mt-lg-0">
+                    
+                    <div class="users d-flex  flex-wrap mt-sm-3 mt-lg-0 ml-auto">
                         <!--compte-->
                         <div class="compte d-flex align-items-center mr-3">
                             <a href="#" class="align-self-center icon ">
@@ -120,7 +138,7 @@
         <div class="container">
             <nav class="categories navbar navbar-expand-lg text-white">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon ml-n4">
+                    <span class="navbar-toggler-icon ml-n4 ">
                         <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-card-list" fill="#fff" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                             <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
@@ -130,9 +148,9 @@
                         </svg>
                     </span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav ">
+                <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="row">
-                        <div class="col d-inline-flex align-items-center ml-n3" style="width:15rem;">
+                        <div class="col d-inline-flex align-items-center ml-n3" style="width: 15rem;">
                             <h3 class="mr-5">Categories</h3>
                             <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-card-list" fill="#fff" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
@@ -157,7 +175,7 @@
    <div class="container">
        {% block content %}
        <div class="elements d-flex">
-           <div class="sous-categorie d-md-flex flex-column d-none list-group" id="souscategorie">
+           <div class="sous-categorie d-md-flex flex-column d-none list-group"  id="souscategorie" >
                 {% block souscategorie %}
             
                 {% endblock %}
@@ -169,12 +187,12 @@
               {% endblock %}
               <!--produits-->
               
-              <div class="listes-des-produits mt-4" id=produit >
+              <div class="listes-des-produits mt-4" id='produit' >
                 {% block produit %}
-                {% endblock %}
-                  
+                {% endblock %} 
               </div>
-              
+              {% block plus-de-produit %}
+              {% endblock%}     
            </div>
        </div>
        {% endblock %}
@@ -233,7 +251,7 @@
                               <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email Adress">
                             </div>
                             <a href="" class="btn btn-primary" type="submit">S'abonner</a>
-                          </form>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -251,6 +269,7 @@
 			</div>
         </div>
     </div>
+
    </footer>
    <!--Option javascrpt-->
    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

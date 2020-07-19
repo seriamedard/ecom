@@ -1,5 +1,7 @@
 from django.db import models
-
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -40,13 +42,13 @@ class Produit(models.Model):
         upload_to='images/', 
         default='images/photo.jpg'
         )
-    quantite = models.IntegerField(default=1)
-    premier_prix = models.FloatField(default=0.0)
-    prix = models.FloatField()
-    taux_reduction = models.FloatField(blank=True, default=0)
-    promotion = models.BooleanField(default=False)
-    etoile = models.IntegerField(default=0)
-    date_de_creation = models.DateField(auto_now_add=True)
+    quantite = models.IntegerField('quantité', default=1)
+    premier_prix = models.FloatField(default=0.0, max_length=None)
+    prix = models.FloatField(default=0.0)
+    taux_reduction = models.FloatField('taux de réduction',blank=True, default=0, max_length=3)
+    promotion = models.BooleanField('Mise en promotion', default=False)
+    etoile = models.IntegerField('Nombre de vue', default=0)
+    date_de_creation = models.DateField('Ajouter le', auto_now_add=True)
     slug = models.SlugField(max_length=150, null=True)
 
     categorie = models.ForeignKey(
@@ -68,6 +70,33 @@ class Produit(models.Model):
 
     def __str__(self):
         return self.nom
+
+    def reduction(self, *args, **kwargs):
+        self.taux_reduction  = (1 - self.prix / self.premier_prix)*100
+        return self.taux_reduction
+
+
+@receiver(post_delete, sender=Produit)
+def produit_suppression(sender, instance, **kwargs):
+    print('un produit vient d''être supprimer')
+
+
+class CompteUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True)
+    inscrit_newsletter = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "Profil de {0}".format(self.user.username)
+
+class Panier(models.Model):
+    nom = models.CharField(max_length=300)
+    date_de_creation = models.DateTimeField(auto_now_add=True)
+    produits = models.ManyToManyField(Produit, null=True, blank=True)
+    
+
+
+
 
 
 

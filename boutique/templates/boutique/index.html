@@ -2,6 +2,14 @@
 
 {% block title %}Accueil{% endblock %}
 
+{% block newsletter %}
+    {% include 'boutique/newsletter.html' %}
+{%endblock%}
+
+{%block search%}
+    {% include 'boutique/recherche_form.html' %}
+{%endblock%}
+
 {% block cat %}
     {% include 'boutique/categorie.html' %}
 {% endblock %}
@@ -17,3 +25,16 @@
     {% block produit %}
         {% include 'boutique/liste.html' %}
     {% endblock %}
+
+    {% block plus-de-produit %}
+    <div class="plus-de-produit d-inline-flex  align-items-center">
+        <a href="{% url 'boutique:boutique' %}">
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </a>
+        <a href="{% url 'boutique:boutique' %}">Tous les produits</a>
+    </div>
+    {% endblock%}
+              
+

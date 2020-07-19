@@ -1,0 +1,9 @@
+{% extends 'boutique/tous_produits.html' %}
+{% block title %}se-recherche-{{resultat}}{% endblock %}
+{% block produit %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>{{resultat}}</strong> résultat{{ resultat|pluralize }} trouvé{{ resultat|pluralize }}
+</div>
+{% include 'boutique/liste.html' %}
+
+{% endblock %}
