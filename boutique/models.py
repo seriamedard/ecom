@@ -92,8 +92,8 @@ class CompteUser(models.Model):
 class Panier(models.Model):
     nom = models.CharField(max_length=300)
     date_de_creation = models.DateTimeField(auto_now_add=True)
-    produits = models.ManyToManyField(Produit, null=True, blank=True)
-    
+    produits = models.ManyToManyField(Produit, blank=True, related_name='produits')
+
 
 
 
