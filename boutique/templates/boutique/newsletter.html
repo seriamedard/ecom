@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<a   href="{% url 'boutique:newsletter' %}" data-toggle="modal" data-target="#exampleModal">
+<a   href="{% url 'boutique:accueil' %}" data-toggle="modal" data-target="#exampleModal">
     Newsletter
 </a>
   
@@ -16,21 +16,31 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
         </div>
-        <form action="">
+        <form action="{% url 'boutique:accueil' %}" method="POST">
+            {% csrf_token %}
             <div class="modal-body">
-                
                 <div class="form-group">
-                    <input class="form-control" id="exampleFormControlTextarea1" placeholder="Prenom" rows="3"></input>
+                    {{form.last_name}}
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email Adress">
+                    {{form.email}}
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button> -->
-                <a href="" class="btn btn-primary" type="submit">Je m'inscrits</a>
+                <button type="submit" class="btn btn-primary" >Je m'inscris</button>
             </div>
         </form>
+        {% if errors %}
+        <div class="ml-3">
+            {% for key, error in errors %}
+            {% autoescape off %}
+                {{ error }}
+            {% endautoescape %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+
       </div>
     </div>
 </div>

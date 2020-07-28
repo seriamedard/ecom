@@ -25,8 +25,27 @@ SECRET_KEY = 'tbwiiy^g@tb-!z+qu0qhhlqn6_%u+sife#5pl=o385=5=cej&('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+EMAIL_BACKEND = [
+    'django.core.mail.backends.smtp.EmailBackend'
+]
+if DEBUG:
+    EMAIL_BACKEND += [
+        'django.core.mail.backends.filebased.EmailBackend',
+    ]
+    EMAIL_FILE_PATH = '/tmp/app-messages'
 
+
+ALLOWED_HOSTS = ['127.0.0.1']
+EMAIL_HOST = ['localhost']
+EMAIL_PORT = ['25']
+SERVAL_EMAIL = 'no-reply@soma-e.com'
+EMAIL_SUBJECT_PREFIX = ['soma-e']
+EMAIL_USE_LOCALTIME = True
+ADMINS = (
+    ('asus', 'seria.medard.pge2018@gmail.com'),
+)
+
+MANAGERS = ADMINS
 
 # Application definition
 
@@ -51,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
 ]
 
 ROOT_URLCONF = 'ecom.urls'
@@ -67,6 +87,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'ecom.context_processors.get_variable',
+                'ecom.context_processors.get_variable_panier',
             ],
         },
     },
@@ -124,9 +145,12 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
+DEFAULT_CHARSET = 'utf-8'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+LOGIN_URL = '/boutique/connexion/'

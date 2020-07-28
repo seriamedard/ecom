@@ -14,15 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.conf.urls import url
 from django.conf.urls.static import static
 from django.urls import path, include
 from . import settings
-from boutique.views import accueil
+from boutique.views import accueil, ajout_au_panier
 
 urlpatterns = [
     path('', accueil),
     path('admin/', admin.site.urls),
+    path('ajout_au_panier/', ajout_au_panier, name='ajout_au_panier'),
     path('boutique/', include('boutique.urls', namespace='boutique')),
 ]
 

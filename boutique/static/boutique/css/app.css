@@ -28,3 +28,7 @@
 .nav .lien-categorie:hover{
     opacity: 0.6;
 }
+
+#navbarNav .background{
+    background-color: coral;
+}

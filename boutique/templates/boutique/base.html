@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'boutique/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'boutique/css/app.css' %}">
     <!--Typographie-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
     <link href="//db.onlinewebfonts.com/c/02a0efa4275f78836dfc89db9e21feea?family=Futura+Book" rel="stylesheet" type="text/css"/>
     <link href="//db.onlinewebfonts.com/c/4bfead3a244dd227921e53b4d31c36ed?family=AltonaBold" rel="stylesheet" type="text/css"/>
     <title> {% block title %}base{% endblock %}</title>
@@ -28,7 +29,7 @@
                     </li>
                     <li class="nav-item">
                         {% block newsletter %}
-                        <a href="#" class="nav-link">NewsLetter</a>
+                        
                         {% endblock %}
                     </li>
                     <li class="nav-item">
@@ -61,24 +62,15 @@
         <div class="navigation">
             <nav class="navbar navbar-expand-lg pl-0">
                 <a href="{% url 'boutique:accueil' %}" class="navbar-brand">
-                    <img classe="logo" width="65" height="65" src="{% static 'boutique/img/logo.png' %}" alt="logo soma-electronic">
+                    <img classe="logo" width="65" height="65" src="{% static 'boutique/img/logo.png' %}" alt="logo soma-electronic" title="Accueil">
                 </a>
                 <div class="navig-plus mr-auto">
                     {%block search%}
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Entrer un produit" aria-label="Search">
-                        <div class="btn btn-outline-primary my-2 my-sm-0 d-md-none">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
-                                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-                              </svg>
-                        </div>
-                        <button class="btn btn-outline-primary my-2 my-sm-0 d-none d-md-blok" type="submit">Recherche</button>
-                    </form>
+                    
                     {%endblock%}
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"> 
+                    <span class="navbar-toggler-icon ml-n2-2 "> 
                         <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-filter-right" fill="#3a3e59" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/>
                         </svg>
@@ -89,42 +81,131 @@
                     
                     <div class="users d-flex  flex-wrap mt-sm-3 mt-lg-0 ml-auto">
                         <!--compte-->
-                        <div class="compte d-flex align-items-center mr-3">
-                            <a href="#" class="align-self-center icon ">
+                        <div class="compte d-flex mr-3">
+                            <a href="{% url 'boutique:profil' %}" class="align-self-center icon ">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person" fill="#3a3e59" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                                 </svg>
                             </a>
-                            <div class="profil d-flex flex-column mt-n3 ml-n1">
+                            <div class="profil d-flex flex-column mt-n1 ml-n1">
                                 <div class="dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="{% url 'boutique:profil' %}" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Mon compte
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="#">mon compte</a>
-                                        <a class="dropdown-item" href="#">se connecter</a>
-                                        <a class="dropdown-item" href="#">s'inscrire</a>
+                                        <a class="dropdown-item d-inline-flex align-items-center " href="{% url 'boutique:profil' %}" >
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person" fill="#3a3e59" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M13 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM3.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                            </svg>
+                                            <div class="ml-2">
+                                                Mon compte
+                                            </div> 
+                                        </a>
+                                        {% if user.is_authenticated %}
+                                        <a class="dropdown-item d-inline-flex align-items-center" href="{% url 'boutique:deconnexion' %}">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-power" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M5.578 4.437a5 5 0 1 0 4.922.044l.5-.866a6 6 0 1 1-5.908-.053l.486.875z"/>
+                                                <path fill-rule="evenodd" d="M7.5 8V1h1v7h-1z"/>
+                                            </svg>
+                                            <div class="ml-2">
+                                                Se déconnecter
+                                            </div>
+                                                
+                                        </a>
+                                        <a class="dropdown-item d-inline-flex align-items-center" href="{% url 'boutique:inscription' %}">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M11 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM1.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM6 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm4.5 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                                                <path fill-rule="evenodd" d="M13 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+                                            </svg>
+                                            <div class="ml-2">
+                                                Créer un autre
+                                            </div>
+                                        </a>
+                                        {% else %}
+                                        <a class="dropdown-item d-inline-flex align-items-center" href="{% url 'boutique:connexion' %}">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                <path fill-rule="evenodd" d="M4.646 8.354a.5.5 0 0 0 .708 0L8 5.707l2.646 2.647a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 0 0 0 .708z"/>
+                                                <path fill-rule="evenodd" d="M8 11.5a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-1 0v5a.5.5 0 0 0 .5.5z"/>
+                                            </svg>
+                                            <div class="ml-2">
+                                                Se connecter
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item d-inline-flex align-items-center" href="{% url 'boutique:inscription' %}">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M11 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM1.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM6 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm4.5 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                                                <path fill-rule="evenodd" d="M13 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+                                            </svg>
+                                            <div class="ml-2">
+                                                S'inscrire
+                                            </div>
+                                        </a>
+                                        {% endif %}
                                     </div>
                                 </div>
-                                <div class="mx-auto mt-n2"><a href="#">connexion</a></div>
+                                {% if user.is_authenticated %}
+                                <div class=" ml-3 mt-n2">
+                                    <div style="color: green;" class="d-inline-flex align-items-center">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M11 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM1.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM6 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm6.854.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                                        </svg>
+                                        <div class="ml-2">Connecté</div>
+
+                                    </div>
+                                </div>
+                                {% else %}
+                                <div class="mx-auto mt-n2">
+                                    <a href="{% url 'boutique:connexion' %}">connexion</a>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                         <!--panier-->
-                       <div class="panier d-flex align-items-center">
-                            <a href="" class="icon align-self-center">
+        
+                        {% block panier %}
+                        <div class="panier d-flex align-items-center">
+                            <a href="" class="icon align-self-center" data-toggle="modal" data-target="#exampleModalScrollable">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart3" fill="#3a3e59" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                                 </svg>
-    
+                        
                             </a>
                             <!--quantité dans le panier-->
-                            <span class=" ml-n3 mt-n5 badge badge-primary">50</span>
+                            <span class=" ml-n3 mt-n5 badge badge-primary">{{ quantite_dans_panier }}</span>
                             <div class="ml-2 d-block">
                                 <p class="mb-n1">Panier:</p>
                                 <!--Prix total-->
-                                <p class="font-weight-bold mt-auto">1000 FCFA</p>
+                                <p class="font-weight-bold mt-auto">{{ prix_total }} FCFA</p>
                             </div>
-                       </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title font-weight-light" id="exampleModalScrollableTitle">Mon panier: {% now "D j b  Y P" %}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {% if user.is_authenticated %}
+                                                {% include 'boutique/contenu_panier.html' %}
+                                            {% else %}
+                                            <p><a href="{% url 'boutique:connexion' %}">Connectez vous! </a>pour profiter pleinement de cette fonctionnalité.</p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                            {% if user.is_authenticated %}
+                                            <a href="#" type="button" class="btn btn-primary">Achat</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endblock %}
                     </div>
                 </div>
             </nav>
@@ -138,7 +219,7 @@
         <div class="container">
             <nav class="categories navbar navbar-expand-lg text-white">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon ml-n4 ">
+                    <span class="navbar-toggler-icon ml-n5">
                         <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-card-list" fill="#fff" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                             <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
@@ -150,7 +231,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="row">
-                        <div class="col d-inline-flex align-items-center ml-n3" style="width: 15rem;">
+                        <div class="col d-inline-flex align-items-center ml-n3 w-100" style="width: 15rem;">
                             <h3 class="mr-5">Categories</h3>
                             <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-card-list" fill="#fff" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
@@ -181,6 +262,16 @@
                 {% endblock %}
            </div>
            <div class="produits ml-3">
+                {% if messages %}
+                <div class="alert alert-danger alert-dismissible fade show mt-1" role="alert">
+                    {% for message in messages %}
+                        {{message}}
+                    {% endfor %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endif %}
                <!--carousell promo-->
                {% block carousel %}
                
@@ -207,50 +298,67 @@
                     <img src="{% static 'boutique/img/logo.png' %}" alt="logo" width="100px">
                     <blockquote class="blockquote font-weight-light">
                         <p class="mt-3 mb-2 text-justify">
-                            Soma-Electronic est une boutique de vente en ligne fictive dans le cadre d'évalution en Django.
-                            Oui le site est bel et bien construit avec django en profitant de toute sa magie. 
+                            Soma-Electronic est une boutique de vente en ligne, fictive dans le cadre d'un projet Django.
+                            Oui le site est bel et bien construit avec Django en profitant de toute sa magie. 
                         </p>
-                        <footer class="blockquote-footer">Seria Medard ,<cite title="Source Title"> Le softpreneur</cite></footer>
+                        <footer class="blockquote-footer">Seria Medard ,<cite title="Source Title"> The softpreneur</cite></footer>
                     </blockquote>
                     <div class="icon mx-auto d-inline-flex align-items-center">
-                        <a href="" class="mr-2">
-                            <svg id="Capa_1" enable-background="new 0 0 512 512" height="1rem" viewBox="0 0 512 512" width="1rem" xmlns="http://www.w3.org/2000/svg"><path d="m512 256c0-141.4-114.6-256-256-256s-256 114.6-256 256 114.6 256 256 256c1.5 0 3 0 4.5-.1v-199.2h-55v-64.1h55v-47.2c0-54.7 33.4-84.5 82.2-84.5 23.4 0 43.5 1.7 49.3 2.5v57.2h-33.6c-26.5 0-31.7 12.6-31.7 31.1v40.8h63.5l-8.3 64.1h-55.2v189.5c107-30.7 185.3-129.2 185.3-246.1z"/></svg>
+                        <a href="https://www.instagram.com/the_softpreneur" class="mr-2" target="_blank">
+                            <svg height="1.5rem" viewBox="0 0 512 512.00006" width="1.5rem" xmlns="http://www.w3.org/2000/svg"><path d="m261.039062 512c-1.695312 0-3.390624 0-5.097656-.007812-40.132812.097656-77.214844-.921876-113.277344-3.117188-33.0625-2.011719-63.242187-13.4375-87.28125-33.039062-23.195312-18.914063-39.035156-44.488282-47.078124-76.003907-7-27.4375-7.371094-54.371093-7.726563-80.421875-.257813-18.691406-.5234375-40.839844-.578125-63.363281.0546875-22.617187.320312-44.765625.578125-63.457031.355469-26.046875.726563-52.980469 7.726563-80.421875 8.042968-31.515625 23.882812-57.089844 47.078124-76.003907 24.039063-19.601562 54.21875-31.027343 87.285157-33.039062 36.0625-2.191406 73.152343-3.2148438 113.371093-3.1171875 40.144532-.0859375 77.214844.9257815 113.277344 3.1171875 33.0625 2.011719 63.242188 13.4375 87.28125 33.039062 23.199219 18.914063 39.035156 44.488282 47.078125 76.003907 7 27.4375 7.371094 54.375 7.726563 80.421875.257812 18.691406.527344 40.839844.578125 63.363281-.050781 22.617187-.320313 44.765625-.578125 63.457031-.148438 11.046875-9.273438 19.875-20.269532 19.726563-11.046874-.152344-19.875-9.230469-19.726562-20.273438.253906-18.582031.523438-40.585937.574219-62.910156-.050781-22.230469-.320313-44.234375-.574219-62.816406-.324219-23.714844-.660156-48.238281-6.488281-71.078125-5.878907-23.039063-17.183594-41.507813-33.597657-54.894532-17.753906-14.480468-39.433593-22.59375-64.433593-24.113281-35.214844-2.140625-71.464844-3.128906-110.847657-3.046875-39.476562-.09375-75.730468.90625-110.945312 3.046875-25 1.519531-46.675781 9.632813-64.433594 24.109375-16.414062 13.386719-27.71875 31.855469-33.597656 54.898438-5.828125 22.839844-6.164062 47.363281-6.488281 71.078125-.253907 18.582031-.519531 40.585937-.574219 62.910156.054688 22.230469.320312 44.234375.574219 62.816406.324219 23.714844.660156 48.238281 6.488281 71.078125 5.878906 23.039063 17.183594 41.507813 33.597656 54.894532 17.757813 14.480468 39.433594 22.59375 64.433594 24.113281 35.214844 2.140625 71.476562 3.140625 110.851562 3.042969 39.480469.09375 75.726563-.902344 110.941407-3.042969 25-1.519531 46.675781-9.632813 64.433593-24.113281 11.824219-9.644532 21.0625-22.019532 27.457032-36.785157 4.390625-10.132812 16.164062-14.792969 26.300781-10.402343 10.136719 4.390624 14.792969 16.164062 10.40625 26.300781-8.964844 20.699219-22.046875 38.15625-38.886719 51.886719-24.039062 19.605468-54.21875 31.027343-87.28125 33.039062-34.535156 2.101562-70.011718 3.125-108.277344 3.125zm118.949219-256c0-68.925781-56.074219-125-125-125-68.921875 0-125 56.074219-125 125s56.078125 125 125 125c68.925781 0 125-56.074219 125-125zm-40 0c0 46.867188-38.128906 85-85 85-46.867187 0-85-38.132812-85-85s38.132813-85 85-85c46.871094 0 85 38.132812 85 85zm54-165c-16.566406 0-30 13.429688-30 30s13.433594 30 30 30c16.570313 0 30-13.429688 30-30s-13.429687-30-30-30zm0 0"/></svg>
                         </a>
-                        <a href="" class="mr-2" >
-                            <svg height="1rem" viewBox="0 0 512 512" width="1rem" xmlns="http://www.w3.org/2000/svg"><path d="m256 0c-141.363281 0-256 114.636719-256 256s114.636719 256 256 256 256-114.636719 256-256-114.636719-256-256-256zm5.425781 405.050781c-.003906 0 .003907 0 0 0h-.0625c-25.644531-.011719-50.84375-6.441406-73.222656-18.644531l-81.222656 21.300781 21.738281-79.375c-13.410156-23.226562-20.464844-49.578125-20.453125-76.574219.035156-84.453124 68.769531-153.160156 153.222656-153.160156 40.984375.015625 79.457031 15.96875 108.382813 44.917969 28.929687 28.953125 44.851562 67.4375 44.835937 108.363281-.035156 84.457032-68.777343 153.171875-153.21875 153.171875zm0 0"/><path d="m261.476562 124.46875c-70.246093 0-127.375 57.105469-127.40625 127.300781-.007812 24.054688 6.726563 47.480469 19.472657 67.75l3.027343 4.816407-12.867187 46.980468 48.199219-12.640625 4.652344 2.757813c19.550781 11.601562 41.964843 17.738281 64.816406 17.746094h.050781c70.191406 0 127.320313-57.109376 127.351563-127.308594.011718-34.019532-13.222657-66.003906-37.265626-90.066406-24.042968-24.0625-56.019531-37.324219-90.03125-37.335938zm74.90625 182.035156c-3.191406 8.9375-18.484374 17.097656-25.839843 18.199219-6.597657.984375-14.941407 1.394531-24.113281-1.515625-5.5625-1.765625-12.691407-4.121094-21.828126-8.0625-38.402343-16.578125-63.484374-55.234375-65.398437-57.789062-1.914063-2.554688-15.632813-20.753907-15.632813-39.59375 0-18.835938 9.890626-28.097657 13.398438-31.925782 3.511719-3.832031 7.660156-4.789062 10.210938-4.789062 2.550781 0 5.105468.023437 7.335937.132812 2.351563.117188 5.507813-.894531 8.613281 6.570313 3.191406 7.664062 10.847656 26.5 11.804688 28.414062.957031 1.917969 1.59375 4.152344.320312 6.707031-1.277344 2.554688-5.519531 8.066407-9.570312 13.089844-1.699219 2.105469-3.914063 3.980469-1.679688 7.8125 2.230469 3.828125 9.917969 16.363282 21.296875 26.511719 14.625 13.039063 26.960938 17.078125 30.789063 18.996094 3.824218 1.914062 6.058594 1.59375 8.292968-.957031 2.230469-2.554688 9.570313-11.175782 12.121094-15.007813 2.550782-3.832031 5.105469-3.191406 8.613282-1.914063 3.511718 1.273438 22.332031 10.535157 26.160156 12.449219 3.828125 1.917969 6.378906 2.875 7.335937 4.472657.960938 1.597656.960938 9.257812-2.230469 18.199218zm0 0"/></svg>
+                        <a href="https://github.com/seriamedard" target="_blank" class="mr-2">
+                            <svg enable-background="new 0 0 24 24" height="1.5rem" viewBox="0 0 24 24" width="1.5rem" xmlns="http://www.w3.org/2000/svg"><path d="m12 .5c-6.63 0-12 5.28-12 11.792 0 5.211 3.438 9.63 8.205 11.188.6.111.82-.254.82-.567 0-.28-.01-1.022-.015-2.005-3.338.711-4.042-1.582-4.042-1.582-.546-1.361-1.335-1.725-1.335-1.725-1.087-.731.084-.716.084-.716 1.205.082 1.838 1.215 1.838 1.215 1.07 1.803 2.809 1.282 3.495.981.108-.763.417-1.282.76-1.577-2.665-.295-5.466-1.309-5.466-5.827 0-1.287.465-2.339 1.235-3.164-.135-.298-.54-1.497.105-3.121 0 0 1.005-.316 3.3 1.209.96-.262 1.98-.392 3-.398 1.02.006 2.04.136 3 .398 2.28-1.525 3.285-1.209 3.285-1.209.645 1.624.24 2.823.12 3.121.765.825 1.23 1.877 1.23 3.164 0 4.53-2.805 5.527-5.475 5.817.42.354.81 1.077.81 2.182 0 1.578-.015 2.846-.015 3.229 0 .309.21.678.825.56 4.801-1.548 8.236-5.97 8.236-11.173 0-6.512-5.373-11.792-12-11.792z" fill="#212121"/></svg>
+                        </a>
+                        <a href="https://wa.me/221774189088" class="mr-2" target="_blank">
+                            <svg height="1.5rem" viewBox="0 0 512 512" width="1.5rem" xmlns="http://www.w3.org/2000/svg"><path d="m256 0c-141.363281 0-256 114.636719-256 256s114.636719 256 256 256 256-114.636719 256-256-114.636719-256-256-256zm5.425781 405.050781c-.003906 0 .003907 0 0 0h-.0625c-25.644531-.011719-50.84375-6.441406-73.222656-18.644531l-81.222656 21.300781 21.738281-79.375c-13.410156-23.226562-20.464844-49.578125-20.453125-76.574219.035156-84.453124 68.769531-153.160156 153.222656-153.160156 40.984375.015625 79.457031 15.96875 108.382813 44.917969 28.929687 28.953125 44.851562 67.4375 44.835937 108.363281-.035156 84.457032-68.777343 153.171875-153.21875 153.171875zm0 0"/><path d="m261.476562 124.46875c-70.246093 0-127.375 57.105469-127.40625 127.300781-.007812 24.054688 6.726563 47.480469 19.472657 67.75l3.027343 4.816407-12.867187 46.980468 48.199219-12.640625 4.652344 2.757813c19.550781 11.601562 41.964843 17.738281 64.816406 17.746094h.050781c70.191406 0 127.320313-57.109376 127.351563-127.308594.011718-34.019532-13.222657-66.003906-37.265626-90.066406-24.042968-24.0625-56.019531-37.324219-90.03125-37.335938zm74.90625 182.035156c-3.191406 8.9375-18.484374 17.097656-25.839843 18.199219-6.597657.984375-14.941407 1.394531-24.113281-1.515625-5.5625-1.765625-12.691407-4.121094-21.828126-8.0625-38.402343-16.578125-63.484374-55.234375-65.398437-57.789062-1.914063-2.554688-15.632813-20.753907-15.632813-39.59375 0-18.835938 9.890626-28.097657 13.398438-31.925782 3.511719-3.832031 7.660156-4.789062 10.210938-4.789062 2.550781 0 5.105468.023437 7.335937.132812 2.351563.117188 5.507813-.894531 8.613281 6.570313 3.191406 7.664062 10.847656 26.5 11.804688 28.414062.957031 1.917969 1.59375 4.152344.320312 6.707031-1.277344 2.554688-5.519531 8.066407-9.570312 13.089844-1.699219 2.105469-3.914063 3.980469-1.679688 7.8125 2.230469 3.828125 9.917969 16.363282 21.296875 26.511719 14.625 13.039063 26.960938 17.078125 30.789063 18.996094 3.824218 1.914062 6.058594 1.59375 8.292968-.957031 2.230469-2.554688 9.570313-11.175782 12.121094-15.007813 2.550782-3.832031 5.105469-3.191406 8.613282-1.914063 3.511718 1.273438 22.332031 10.535157 26.160156 12.449219 3.828125 1.917969 6.378906 2.875 7.335937 4.472657.960938 1.597656.960938 9.257812-2.230469 18.199218zm0 0"/></svg>
                         </a>
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-lg-3 mt-lg-4">
+                <div class="col-sm-12 col-lg-3 mt-4">
                     <h4>Mon compte</h4>
-                    <div class="plus-info mr-4 pt-4 d-flex flex-column">
-                        <a href="">Mon Compte</a>
-                        <a href="">Se connecter</a>
-                        <a href="">Créer un compte</a>
+                    <div class="plus-info mr-4 pt-lg-4 d-flex flex-column">
+                        <a href="{% url 'boutique:profil' %}">Mon Compte</a>
+                        {% if user.is_authentificated %}
+                        <a href="{% url 'boutique:deconnexion' %}">Se déconnecter</a>
+                        {% else %}
+                        <a href="{% url 'boutique:connexion' %}">Se connecter</a>
+                        {% endif %}
+                        <a href="{% url 'boutique:inscription' %}">Créer un compte</a>
                     </div>
                 </div>
             
-                <div class="col-sm-12 col-lg-3 mt-lg-4">
+                <div class="col-sm-12 col-lg-3 mt-4">
                     <h4>Notre Service</h4>
-                    <div class="plus-info mr-4 pt-4 d-flex flex-column">
+                    <div class="plus-info mr-4 pt-lg-4 d-flex flex-column">
                         <a href="">A propos</a>
-                        <a href="">Nous contacter</a>
-                        <a href="">Signaler un bug</a>
+                        <a href="{% url 'boutique:contacter' %}">Nous contacter</a>
+                        <a href="{% url 'boutique:bug' %}">Signaler un bug</a>
                     </div>
                 </div>
-                <div class="col-sm-12 col-lg-3 mt-lg-4">
+                <div class="col-sm-12 col-lg-3 mt-4">
                     <h4>Rester Connecter</h4>
-                    <div class="plus-info mr-4 pt-4 d-flex flex-column">
+                    <div class="plus-info mr-4 pt-1 d-flex flex-column">
                         <p>Abonnez vous à notre NewsLetter pour être au courant des nouveaux produits.</p>
-                        <form>
+                        <form action="{% url 'boutique:accueil' %}" method="POST">
+                            {% csrf_token %}
                             <div class="form-group">
-                                <input class="form-control" id="exampleFormControlTextarea1" placeholder="Prenom" rows="3"></input>
+                                {{form.last_name}}
                             </div>
                             <div class="form-group">
-                              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email Adress">
+                                {{form.email}}
                             </div>
-                            <a href="" class="btn btn-primary" type="submit">S'abonner</a>
+                            {% if errors %}
+                            <div>
+                                {% for key, error in errors %}
+                                {% autoescape off %}
+                                    {{ error }}
+                                {% endautoescape %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <button type="submit" class="btn btn-primary">S'abonner</button>
                         </form>
                     </div>
                 </div>

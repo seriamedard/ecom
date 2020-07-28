@@ -1,8 +1,19 @@
 {% extends 'boutique/tous_produits.html' %}
 {% block title %}se-recherche-{{resultat}}{% endblock %}
 {% block produit %}
+{% for message in messages.info %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Info !</strong> {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
     <strong>{{resultat}}</strong> résultat{{ resultat|pluralize }} trouvé{{ resultat|pluralize }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 {% include 'boutique/liste.html' %}
 

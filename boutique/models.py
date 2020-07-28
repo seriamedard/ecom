@@ -1,7 +1,11 @@
+import os
+import argparse
+from django.conf import settings
 from django.db import models
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from datetime import datetime
 # Create your models here.
 
 
@@ -10,8 +14,8 @@ class SousCategorie(models.Model):
     date_de_creation = models.DateField(auto_now_add=True)
 
     class Meta:
-        verbose_name = 'sous categorie'
-        verbose_name_plural = 'sous categories'
+        verbose_name = 'Sous Categorie'
+        verbose_name_plural = 'Sous Categories'
         ordering = ['nom']
 
     def __str__(self):
@@ -32,6 +36,29 @@ class Categorie(models.Model):
 
     def __str__(self):
         return self.nom
+
+
+def renommage(instance, nom_fichier):
+    return "{}-{}".format(instance.id, nom_fichier)
+
+class Media(models.Model):
+    nom = models.CharField(max_length=100)
+    sous_categorie = models.ForeignKey(SousCategorie, on_delete=models.CASCADE, blank=True)
+    image = models.FileField(upload_to=renommage, verbose_name='Image plus')
+
+    def save(self, *args, **kwargs):
+
+        if self.id is None:
+            saved_image=self.image
+            self.image = None
+            super(Media, self).save(*args, **kwargs)
+            self.image = saved_image
+            if 'force_insert' in kwargs:
+                kwargs.pop('force_insert')
+        super(Media, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return '{}_{}'.format(self.nom,self.image.name)
 
 
 class Produit(models.Model):
@@ -62,6 +89,7 @@ class Produit(models.Model):
         on_delete=models.CASCADE, 
         verbose_name="Les sous categories"
         )
+    media = models.ManyToManyField(Media, blank=True)
 
     class Meta:
         verbose_name = 'produit'
@@ -83,16 +111,60 @@ def produit_suppression(sender, instance, **kwargs):
 
 class CompteUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(blank=True)
+    bio = models.TextField(blank=True, null=True)
     inscrit_newsletter = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = 'Profil'
+        verbose_name_plural = 'Profils'
 
     def __str__(self):
         return "Profil de {0}".format(self.user.username)
 
+
 class Panier(models.Model):
-    nom = models.CharField(max_length=300)
-    date_de_creation = models.DateTimeField(auto_now_add=True)
+    nom = models.CharField(max_length=300, blank=True)
+    date_de_creation = models.DateTimeField('Date de création', auto_now_add=True)
     produits = models.ManyToManyField(Produit, blank=True, related_name='produits')
+    user = models.ForeignKey(CompteUser, related_name='utilisateur', on_delete=models.CASCADE, blank=True, null=True)
+    quantite = models.PositiveIntegerField('Quantité', default=0)
+    prix = models.PositiveIntegerField('Prix',default=0)
+    traite = models.BooleanField('Traité',default=False)
+    terminer = models.BooleanField('Terminé', default=False)
+
+    def nom_du_panier(self):
+        self.nom = "Panier du {} par {}".format(datetime.now(), self.user.user.username)
+        return self.nom
+
+    def __str__(self):
+        return self.nom
+    
+
+    
+class Contact(models.Model):
+    prenom = models.CharField(max_length=100)
+    numero_de_telephone = models.CharField(max_length=255, null=True)
+    email = models.EmailField(unique=True)
+
+    def __str__(self):
+        return "{} : contact {}".format(self.prenom, self.id)
+
+class Bug(models.Model):
+    date = models.DateTimeField(auto_now_add=True)
+    corrige = models.BooleanField(default=False)
+    description = models.TextField()
+
+    class Meta:
+        verbose_name = "Rapport de bug"
+        verbose_name_plural = "Rapports de bug"
+    
+    def __str__(self):
+        return "{}...".format(self.description[:15])
+
+
+
+
+
 
 
 

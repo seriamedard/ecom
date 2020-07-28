@@ -1,0 +1,40 @@
+{% extends 'boutique/inscription.html' %}
+{% block title %}connexion sur soma electronic{% endblock %}
+{% block content %}
+<div class="d-flex my-5">
+    <div class="mx-auto ">
+        <div class="formulaire">
+            <h2 class="mb-3 text-center">
+                Connexion
+            </h2>
+            {% if messages %}
+                <div class="alert alert-danger alert-dismissible fade show mt-1" role="alert">
+                    {% for message in messages %}
+                        {{message}}
+                    {% endfor %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+            {% if error %}
+            <p style="color: rgb(236, 24, 24);"><strong>Nom d'utilisateur incorret ou mot de passe invalide.</strong></p>
+            {% endif %}
+            {% if user.is_authentificated %}
+                {% url 'boutique:boutique' %}
+            {% else %}
+            <form action="{% url 'boutique:connexion' %}" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary" >Se connecter</button>
+            </form>
+            <hr>
+            <p class="">
+                Vous n'avez pas encore de compte!
+                <a href="{% url 'boutique:inscription' %}">créer un compte</a>
+            </p>
+            {% endif %}            
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'boutique/inscription.html' %}
+{% block title%}signal du bug {%endblock%}
+{% block content%}
+    <div class="row">
+        <div class="d-block mx-auto mt-3">
+            <form action="{% url 'boutique:bug' %}" method="POST" >
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="btn btn-primary">Soumettre</button>
+            </form>
+            <div class="text-right">Retourner à <a href="{% url 'boutique:accueil' %}">L'accueil</a></div>
+        </div> 
+    </div>
+    
+{% endblock %}

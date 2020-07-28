@@ -1,7 +1,10 @@
 from django.contrib import admin 
+from django.contrib.auth.models import User
 from django.forms import ModelForm
 
-from .models import Produit, SousCategorie, Categorie
+from .models import (Produit, SousCategorie, Categorie, 
+                    CompteUser, Contact, Media, 
+                    Panier, Bug)
 # Register your models here.
 
 class CategorieSousCategorieInline(admin.TabularInline):
@@ -21,18 +24,9 @@ class SousCategorieAdmin(admin.ModelAdmin):
 class ProduitAdminForm(ModelForm):
     def clean(self):
         cleaned_data = super().clean()
-        nom = cleaned_data.get('nom')
-        description = cleaned_data.get('description')
         quantite =  cleaned_data.get('quantite')
-        disponible = cleaned_data.get('disponible')
-        promotion = cleaned_data.get('promotion')
-        etoile = cleaned_data.get('etoile')
         premier_prix = cleaned_data.get('premier_prix')
         prix = cleaned_data.get('prix')
-        taux_reduction = cleaned_data.get('taux_reduction')
-        image = cleaned_data.get('image')
-        sous_categorie = cleaned_data.get('sous_categorie')
-        categorie = cleaned_data.get('categorie')
         quantite = cleaned_data.get('quantite')
 
         #quantite
@@ -56,34 +50,28 @@ class ProduitAdminForm(ModelForm):
             msg = "Le prix d'un produit doit être positif et inferieur au premier prix"
             self.add_error('prix', msg)
 
-        
-
-
 
 @admin.register(Produit)
 class ProduitAdmin(admin.ModelAdmin):
-    #inlines = [SousCategorieInline,]
-
     form = ProduitAdminForm
-    fields = (
-        'nom', 
-        'description', 
-        'quantite', 
-        'disponible', 
-        'promotion',
-        'etoile',
-        'premier_prix',
-        'prix',
-        'taux_reduction',
-        'slug',
-        'image',
-        'sous_categorie',
-        'categorie', 
-        'date_de_creation',
-        )
+    fieldsets = (
+        ('Titre',{
+            'fields':('nom','slug', 'description', 'image', 'date_de_creation')
+        }),
+        ('Prix-Qté',{
+            'classes':('collapse',),
+            'fields': ('quantite','disponible','promotion','etoile','premier_prix','prix','taux_reduction')
+        }),
+        ('Categories',{
+            'classes':('collapse',),
+            'fields': ('sous_categorie','categorie','media'),
+        }),
+    )
+
     list_filter = ('promotion','prix')
     list_display = ['nom','disponible','promotion','prix']
-    search_fields = ('nom', 'sous_categorie')
+    search_fields = ['nom']
+    filter_horizontal = ('media',)
     prepopulated_fields = {
         "slug": ("nom",),
         }
@@ -99,19 +87,7 @@ class ProduitAdmin(admin.ModelAdmin):
     def promotion(self,request, queryset):
         queryset.update(taux_reduction=True)
     promotion.short_description = "Mise en Promotion"
-
-    # def get_form(self, request, obj=Produit, **kwargs):
-    #     form = super(ProduitAdmin, self).get_form(request,obj=produit, **kwargs)
-    #     form.base_fields['taux_reduction'].initial = (1 - obj.prix / obj.premier_prix)*100
-    #     return form
     
-
-
-
-    
-
-
-
 
 class CategorieSousCategorieInline(admin.TabularInline):
     model = Categorie.souscategorie.through
@@ -121,3 +97,34 @@ class CategorieSousCategorieInline(admin.TabularInline):
 class CategorieAdmin(admin.ModelAdmin):
     inlines = [CategorieSousCategorieInline]
     filter_horizontal = ('souscategorie',)
+
+
+@admin.register(CompteUser)
+class CompteUserAdmin(admin.ModelAdmin):
+    list_display = ['user']
+    readonly_fields = ['user','bio', 'inscrit_newsletter']
+    empty_value_display = 'vide'
+    list_per_page = 20
+
+
+@admin.register(Contact)
+class ContactForm(admin.ModelAdmin):
+    readonly_fields = ['prenom', 'email']
+    list_display = ['email', 'prenom','numero_de_telephone']
+    empty_value_display = 'Vide'
+    list_per_page = 10
+
+admin.site.register(Media)
+@admin.register(Panier)
+class PanierAdmin(admin.ModelAdmin):
+    readonly_fields = ['nom', 'produits', 'user', 'quantite', 'prix']
+    filter_horizontal = ('produits',)
+    list_display = ['nom','traite','terminer']
+    list_filter = ['terminer']
+
+
+@admin.register(Bug)
+class BugAdmin(admin.ModelAdmin):
+    readonly_fields = ['description']
+    list_display = ['__str__','date']
+

@@ -1,10 +1,27 @@
-from django.shortcuts import render, get_object_or_404, Http404
+from django.shortcuts import render, get_object_or_404, Http404, redirect
+from django.urls import reverse, NoReverseMatch, resolve, Resolver404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.views.decorators.debug import sensitive_variables
+from django.views.decorators.debug import sensitive_post_parameters
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
+from datetime import datetime
 
-from .models import Categorie, Produit, SousCategorie
+#exception
+from django.core.exceptions import MultipleObjectsReturned
 
+#Import de model
+from .models import (Categorie, Produit, SousCategorie,
+                    CompteUser, Contact, Panier, Bug)
+
+#import des formulaires
+from .forms import (CompteUserForm, ConnexionForm, NewsletterForm, 
+                    ParagraphErrorList, PasswordChangeForm, ProfilForm,
+                    BugForm, ContactUsForm)
 
 # Views
 
@@ -21,7 +38,7 @@ def Boutique(request):
         liste_produits = paginator.page(1)
     except EmptyPage:
         liste_produits = paginator.page(paginator.num_pages)
-
+    resultat = len(liste_produits)
     return render(request,template_name, locals())
 
 
@@ -73,7 +90,7 @@ def produit_dans_categorie(request, id_categorie, id_sous_categorie):
         liste_produits = paginator.page(1)
     except EmptyPage:
         liste_produits = paginator.page(paginator.num_pages)
-
+    resultat = len(liste_produits)
     return render(request, 'boutique/produit_categorie.html', locals())
 
 
@@ -90,10 +107,9 @@ class DetailProduit(DetailView):
 
         return un_produit
 
-       
-
 
 #Accueil
+@sensitive_variables('email', 'contact')
 def accueil(request):
     """
     liste des 12 produits les plus recents
@@ -104,6 +120,28 @@ def accueil(request):
         disponible=True,
         promotion=True).order_by('-date_de_creation')
 
+    if request.method == "POST":
+        envoi = False
+        form = NewsletterForm(request.POST, error_class=ParagraphErrorList)
+        if form.is_valid():
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            envoi = True
+            contact = Contact.objects.filter(email=email)
+            if not contact.exists():
+                contact = Contact.objects.create(
+                    prenom=last_name, 
+                    email=email)
+                contact.save()
+            else:
+                contact.first()
+            messages.info(request, "Vous êtes maintenant inscrit aux nouvelles de soma électronic")
+        else:
+            errors = form.errors.items()
+            messages.warning(request, "Une erreur est arrivée, veillez récommencer!")
+    else:
+        form = NewsletterForm()
+    resultat = len(liste_produits)      
     return render(request, 'boutique/index.html', locals())
 
 
@@ -111,6 +149,7 @@ def accueil(request):
 def recherche(request):
     query = request.GET.get('query')
     if not query:
+        messages.info(request, "Veillez écrire le nom d'un produit pour la recherche.")
         liste_produits = Produit.objects.all()
     else:
         liste_produits = Produit.objects.filter(nom__icontains=query)
@@ -120,17 +159,231 @@ def recherche(request):
         liste_produits = Produit.objects.filter(categorie__nom__icontains=query)
     
     resultat = len(liste_produits)
-    
     return render(request, 'boutique/recherche.html', locals())
 
 
-def newsletter(request):
-    return render(request, 'boutique/newsletter.html', locals())
+# traitement d'inscription
+@sensitive_variables('username','email','password','user','profil')
+def inscription(request):
+    form = CompteUserForm(request.POST or None, error_class=ParagraphErrorList)
+    
+    if form.is_valid():
+        username = form.cleaned_data['username']
+        first_name = form.cleaned_data['first_name']
+        last_name = form.cleaned_data['last_name']
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+        envoi = True
+        user = User.objects.create_user(username=username, 
+                            email=email, 
+                            password=password,
+                            )
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+        profil = CompteUser(user=user)
+        profil.save()
+        user = authenticate(username=username, password=password)
+        
+        if user:
+            login(request, user)
+            messages.add_message(request, messages.INFO, "Vous êtes connecté!")
+            return redirect('boutique:profil')
+    
+    return render(request, 'boutique/inscription.html', locals())
 
 
+# La connexion
+@sensitive_variables('username', 'password', 'user')
+def connexion(request):
+    
+    error = False
+    if request.method == "POST":
+        form = ConnexionForm(request.POST, error_class=ParagraphErrorList)
+        
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password) 
+            if user:
+                login(request, user)
+                return redirect('boutique:accueil')
+            else:
+                error = True
+    else:
+        form = ConnexionForm()
+        
+    return render(request, 'boutique/connexion.html', locals())
 
 
+# La deconnexion
+@sensitive_post_parameters('user','password')
+def deconnexion(request):
+    logout(request)
+    return redirect("boutique:accueil")
 
+# Gestion du profil
+@login_required(login_url='boutique:connexion')
+def profil(request):
+    profil = get_object_or_404(CompteUser, user=request.user)
+    try:
+        liste_panier = Panier.objects.filter(user=CompteUser.objects.get(user=request.user),traite=True)
+    except:
+        liste_panier = []
+    return render(request, 'boutique/profil.html', locals())
+
+
+@login_required(login_url='boutique:connexion')
+def modif_profil(request):
+    if request.method == 'POST':
+        form = ProfilForm(request.POST, error_class=ParagraphErrorList)
+        user = request.user 
+        profil_user =get_object_or_404(CompteUser, user=user)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            bio = form.cleaned_data['bio']
+            newsletter = form.cleaned_data['newsletter']
+
+            user.username = username
+            user.first_name = first_name
+            user.last_name = last_name
+            user.email = email
+            user.save()
+            profil_user.bio = bio
+            profil_user.inscrit_newsletter = newsletter
+            profil_user.save()
+
+            if profil_user.inscrit_newsletter:
+                contact = Contact.objects.filter(email=email)
+                messages.info(request, "Vous êtes maintenant inscrit aux nouvelles de soma électronic")
+                if not contact.exists():
+                    contact = Contact.objects.create(
+                        prenom=last_name, 
+                        email=email)
+                    contact.save()
+                else:
+                    contact.first()
+            else:
+                contact = Contact.objects.filter(email=email)
+                if not contact.exists():
+                    pass
+                else:
+                    contact.first().delete()
+                    profil_user.save()
+            return redirect('boutique:profil')
+    else:
+        form = form = ProfilForm()
+    
+    return render(request, 'boutique/modif_profil.html', locals())
+
+# Changer le mot de passe
+@login_required(login_url='boutique:connexion')
+def changer_mot_de_passe(request):
+    error = False
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.POST, error_class=ParagraphErrorList)
+        user = request.user
+       
+        if form.is_valid():
+            oldpassword = form.cleaned_data['oldpassword']
+            newpassword = form.cleaned_data['newpassword']
+            if user.check_password(oldpassword):
+                user.set_password(newpassword)
+                user.save()
+                messages.success(request, "Mot de passe modifier avec succès!")
+                return redirect('boutique:profil')
+            else:
+                error = True
+    else:
+        form = PasswordChangeForm(request.POST or None)
+    
+    return render(request, 'boutique/changemdp.html', locals())
+
+
+# Traitement du panier
+@login_required(login_url='boutique:connexion')
+def ajout_au_panier(request):
+    """
+    -si user a un panier encours, on recupere le panier et on continue les transactions,
+    -sinon on crée un panier et on fait la transaction, au suivante transaction on itere la premier,
+    -si un produit n'est pas dans le panier , on l'ajout en faisant des calculs sur le panier,
+    -sinon on prend le premier produit et et on met à jour les données des transactions sur ce produit,
+    """
+    quantite = 0
+    if request.method == 'GET':
+        panier = Panier.objects.filter(user=CompteUser.objects.get(user=request.user), traite=False)
+        if not panier.exists():
+            panier = Panier.objects.create(user=CompteUser.objects.get(user=request.user))
+            panier.nom_du_panier()
+        else:
+            panier = panier.last()
+        id=int(request.GET.get('ajout-panier'))
+        produit = Produit.objects.get(id=id)
+        produit_panier = panier.produits.filter(id=produit.id)
+        quatite_un_produit = 0 #initialisation
+        if produit_panier:
+            quatite_un_produit += 1
+            produit_panier = produit_panier.first()
+            quantite += 1
+            panier.quantite += quantite
+            prix_produit = produit_panier.prix * quatite_un_produit
+            panier.prix += prix_produit
+            panier.save()
+        else:
+            panier.produits.add(produit)
+            messages.success(request, "Produit ajouté au panier!")
+            quatite_un_produit = 1
+            quantite = 1
+            prix_produit = produit.prix * quatite_un_produit
+            panier.quantite += quantite
+            panier.prix += prix_produit
+            panier.save()
+
+    try:
+        panierproduit = Panier.objects.get(user=CompteUser.objects.get(user=request.user), traite=False).produits.all()
+    except MultipleObjectsReturned:
+        panierproduit = Panier.objects.filter(user=CompteUser.objects.get(user=request.user), traite=False)
+        panierproduit = panierproduit.last().produits.all()
+    except :
+        panierproduit = []
+
+    return render(request, 'boutique/panier.html', locals())
+
+def sup_item_panier(request):
+    pass
+
+
+def acheter(request, id_produit):
+    # profil = get_object_or_404(CompteUser, user=request.user.username)
+    # panier=Panier.objects.filter(user=profil)
+    # if not panier.exists():
+    produit = get_object_or_404(Produit,id=id_produit)
+    # else:
+    #     pass
+
+    return render(request, 'boutique/achat.html', locals()) 
+
+
+def signal_bug(request):
+    form = BugForm(request.POST or None)
+    envoi = False
+    if form.is_valid():
+        description = form.cleaned_data['description']
+        bug = Bug.objects.create(description=description)
+        bug.save()
+        envoi = True
+        messages.success(request, "Votre demande a été enregistée. Merci!")
+        return redirect('boutique:accueil')
+    return render (request,'boutique/bug.html', locals())
+
+def contacter(request):
+    form = ContactUsForm(request.POST or None)
+    if form.is_valid():
+        pass
+    return render(request, 'boutique/contacter.html', locals())
 
    
     
