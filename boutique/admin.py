@@ -4,7 +4,7 @@ from django.forms import ModelForm
 
 from .models import (Produit, SousCategorie, Categorie, 
                     CompteUser, Contact, Media, 
-                    Panier, Bug)
+                    Panier, Bug, Commande, AvisDemande)
 # Register your models here.
 
 class CategorieSousCategorieInline(admin.TabularInline):
@@ -127,4 +127,14 @@ class PanierAdmin(admin.ModelAdmin):
 class BugAdmin(admin.ModelAdmin):
     readonly_fields = ['description']
     list_display = ['__str__','date']
+
+@admin.register(Commande)
+class CommandeAdmin(admin.ModelAdmin):
+    readonly_fields = ['nom','date','contact']
+    list_display = ['nom','date','valider']
+
+@admin.register(AvisDemande)
+class AvisDemandeAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'date', 'email']
+    readonly_fields = ['date', 'prenom', 'demande']
 

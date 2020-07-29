@@ -19,7 +19,31 @@
                 <img classe="logo" width="65" height="65" src="{% static 'boutique/img/logo.png' %}" alt="logo soma-electronic" title="Accueil">
             </a>
             <div class="navlink ml-auto">
-                <a href="">A propos</a>
+                <a href="" data-toggle="modal" data-target="#staticBackdrop">A propos</a>
+                <!-- Button trigger modal -->
+                
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Soma Electronic</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            Soma-Electronic est une boutique de vente en ligne, fictive dans le cadre d'un projet en Django.
+                            Oui le site est bel et bien construit avec Django en profitant de toute sa magie.
+                            <footer class="blockquote-footer"><a href="https://www.instagram.com/the_softpreneur" target="_blank" rel="noopener noreferrer">Seria Medard </a>,<cite title="Source Title"> The softpreneur</cite></footer>
+
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
             </div>
         </div>
         <hr class="mt-n3">

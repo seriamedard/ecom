@@ -1,0 +1,13 @@
+{% extends 'boutique/index.html' %}
+
+{% block content %}
+<div class="container p-0">
+    <div class="jumbotron">
+        <h1 class="display-4">Merci !!!</h1>
+        <p class="lead">Votre commande a été bien réçu et encours de traitement...</p>
+        <hr class="my-4">
+        <p>Un agent prendra contact avec vous sous peu pour organiser votre livraison au plus vite. Merci de votre confiance!</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'boutique:accueil' %}" role="button">L'accueil</a>
+      </div>
+</div>
+{% endblock %}

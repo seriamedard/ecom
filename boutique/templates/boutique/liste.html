@@ -7,9 +7,9 @@
                 <a href="{% url 'boutique:details' pk=produit.id slug=produit.slug %}">
                     <img  src="{{ produit.image.url }}" class="card-img-top rounded img-responsive" alt="{{ produit.nom}}" >
                 </a>
-                <div class="card-body ">
+                <div class="card-body font-weight-bold">
                     <div class="d-inline-flex">
-                        <h5 class="card-title mr-3">{{ produit.nom }}</h5>
+                        <h4 class="card-title mr-3">{{ produit.nom }}</h4>
                         <div class="like">
                             
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-half" fill="#ed6b5b" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <p class="card-text">
-                        <h6><del class="font-italic" >{{ produit.premier_prix|floatformat }}</del> {{devise}}<span  class="badge badge-danger ml-3 text-white">- {{ produit.reduction|floatformat }}%</span></h6>
+                        <h5><del class="font-italic" >{{ produit.premier_prix|floatformat }}</del> {{devise}}<span  class="badge badge-danger ml-3 text-white">- {{ produit.reduction|floatformat }}%</span></h5>
     
                         <h4>{{ produit.prix|floatformat }} {{devise}}</h4>
                     </p>
@@ -64,8 +64,8 @@
                 <img src="{{ produit.image.url }}" class="card-img-top rounded img-responsive" alt="{{ produit.nom}}">
             </a>
             <div class="card-body ">
-                <div class="d-inline-flex">
-                    <h5 class="card-title mr-3">{{ produit.nom }}</h5>
+                <div class="d-inline-flex ">
+                    <h4 class="card-title mr-3 ">{{ produit.nom }}</h4>
                     <div class="like">
                         
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-half" fill="#ed6b5b" xmlns="http://www.w3.org/2000/svg">
@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <p class="card-text">
-                    <h6><del class="font-italic" >{{ produit.premier_prix|floatformat }}</del> {{devise}}<span  class="badge badge-danger ml-3 text-white">- {{ produit.reduction|floatformat }}%</span></h6>
+                    <h5><del class="font-italic" >{{ produit.premier_prix|floatformat }}</del> {{devise}}<span  class="badge badge-danger ml-3 text-white">- {{ produit.reduction|floatformat }}%</span></h5>
 
                     <h4>{{ produit.prix|floatformat }} {{devise}}</h4>
                 </p>

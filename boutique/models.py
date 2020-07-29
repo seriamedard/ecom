@@ -138,16 +138,38 @@ class Panier(models.Model):
 
     def __str__(self):
         return self.nom
-    
 
+    def save(self, *args, **kwargs):
+        self.quantite_un_produit = 0
+        self.prix_produit = 0
+        super().save(*args, **kwargs)
     
 class Contact(models.Model):
     prenom = models.CharField(max_length=100)
+    nom = models.CharField(max_length=100, blank=True)
     numero_de_telephone = models.CharField(max_length=255, null=True)
+    adress = models.CharField(max_length=255, blank=True)
     email = models.EmailField(unique=True)
 
     def __str__(self):
         return "{} : contact {}".format(self.prenom, self.id)
+
+
+class Commande(models.Model):
+    nom = models.CharField(max_length=500)
+    date = models.DateTimeField(auto_now_add=True)
+    panier = models.OneToOneField(Panier, blank=True, on_delete=models.CASCADE, null=True)
+    contact = models.ForeignKey(Contact, blank=True, null=True, on_delete=models.CASCADE)
+    produit = models.ForeignKey(Produit, blank=True, null=True, on_delete=models.CASCADE)
+    valider = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.nom
+
+    def save(self, *args, **kwargs):
+        self.nom = "Commande N° {}".format(self.id)
+        super(Commande, self).save(*args, **kwargs)
+
 
 class Bug(models.Model):
     date = models.DateTimeField(auto_now_add=True)
@@ -163,7 +185,17 @@ class Bug(models.Model):
 
 
 
+class AvisDemande(models.Model):
+    date = models.DateTimeField(auto_now_add=True)
+    prenom = models.CharField(max_length=100)
+    email = models.EmailField()
+    demande = models.TextField()
+    
+    class Meta:
+        verbose_name = "Demande exterieure"
 
+    def __str__(self):
+        return "{}... de la part de {}".format(self.demande[:15], self.prenom)
 
 
 

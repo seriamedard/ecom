@@ -1,5 +1,13 @@
 
 /* mise en pade du header */
+h1, h2, h3, h4, h5, h6{
+    font-weight: 700;
+}
+
+.font-weak {
+    font-weight: 400;
+  }
+
 .header-haut{
     display: flex;
     justify-content: space-between;

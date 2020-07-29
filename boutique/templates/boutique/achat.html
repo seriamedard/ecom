@@ -1,4 +1,65 @@
-{% extends 'boutique/modif_profil.html' %}
+{% extends 'boutique/index.html' %}
+{% block title %}SE-Achat-{{produit.nom}}{% endblock %}
 {% block content%}
+<div class="container p-0">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'boutique:accueil' %}">Accueil</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'boutique:boutique' %}">Produit</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Payement</li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <h4>DÉTAILS DE FACTURATION</h4>
+            {% block form %}
+            <form action="{% url 'boutique:achat' id_produit=produit.id %}" method="POST">
+                {% csrf_token %}
+                {{ formu.as_p }}
+                <h4 style="text-decoration: underline #ed6b5b;">LA COMMANDE</h4>
+                {% if panier %}
+                {% include 'boutique/contenu_panier.html' %}
+                {% else %}
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Capture</th>
+                        <th scope="col">Produit</th>
+                        <th scope="col">Qté</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td><img src="{{ produit.image.url }}" width="25px" height="25px" alt="{{ produit.nom }}"></td>
+                        <td> <a href="{% url 'boutique:details' pk=produit.id slug=produit.slug %}" title="plus de détail">{{ produit.nom }}</a></td>
+                        <td>{{ quantite_produit }}</td>
+                        <td>{{ prix_produit }} {{ devise }}</td>
+                        <td><a href=""><i class="material-icons" style="font-size:25px;color:red">cancel</i></a></td>
+                      </tr>
 
-{% endblock %}
+                    </tbody>
+                </table>
+                <div>
+                  
+                </div>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th scope="col">Total</th>
+                            <th style="color: #ed6b5b ;">{{ prix_produit }} {{devise}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+    
+                {% endif %}
+                <button type="submit" class="btn btn-primary ml-auto">Valider la commande</button>
+            </form>
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock%}

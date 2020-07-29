@@ -166,21 +166,56 @@ class BugForm(forms.Form):
 class ContactUsForm(forms.Form):
     prenom = forms.CharField(label="Prénom",
                             widget=forms.TextInput(attrs={
-                                'classe':'form-control',
+                                'class':'form-control',
                                 'placeholder':'Prénom',
                             }))
     email = forms.EmailField(label="Email Adress",
                             widget=forms.EmailInput(attrs={
-                                'classe':'form-control',
+                                'class':'form-control',
                                 'placeholder': "Votre mail",
                                 'aria-describedby':"emailHelp",
                             }))
     demande = forms.CharField(label="Posez votre demande",
                             widget=forms.Textarea(attrs={
-                                'classe':'form-control',
+                                'class':'form-control',
                                 'placeholder':"formulez votre demande",
                             })) 
     newsletter = forms.BooleanField(label="Newsletter",
+                                    required=False,
                                     widget=forms.CheckboxInput(attrs={
-                                        'classe':'form-control',
                                     }))
+
+
+class PayementForm(forms.Form):
+    nom = forms.CharField(max_length=100,
+                        widget=forms.TextInput(attrs={
+                            'class':'form-control',
+                            'placeholder':'Nom',
+                        }))
+
+    prenom = forms.CharField(max_length=100,
+                                required=False,
+                                widget=forms.TextInput(attrs={
+                                    'class':'form-control',
+                                    'placeholder':'Prénom',
+                                }))
+
+    email = forms.EmailField(required=True,
+                                widget=forms.EmailInput(attrs={
+                                    'class':'form-control',
+                                    'placeholder':'Email',
+                                }))
+                            
+    adress = forms.CharField(widget=forms.TextInput(attrs={
+                                    'class':'form-control',
+                                    'placeholder':'Adresse de livraison',
+                                }))
+    telephone = forms.CharField(widget=forms.NumberInput(attrs={
+                                'class':'form-control',
+                                'type':'tel',
+                                'placeholder':'Telephone',
+                                }))
+    newsletter = forms.BooleanField(label='Newsletter',
+                                required=False,
+                                widget=forms.CheckboxInput(attrs={
+                                }))

@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.urls import path
+from django.views.generic import TemplateView
 from . import views
 from .forms import ConnexionForm
 
@@ -21,6 +22,9 @@ urlpatterns = [
     url(r'^profil/modifprofil/$', views.modif_profil, name='modif_profil'),
     url(r'^produit/achat/(?P<id_produit>\d+)/$', views.acheter, name='achat'),
     url(r'^ajout_au_panier/$', views.ajout_au_panier, name='ajout_au_panier'),
+    url(r'^sup-item-paier/(?P<id_produit>\d+)/$', views.sup_item_panier, name='supprimer'),
+    url(r'^commandevalider/$', TemplateView.as_view(template_name='boutique/merci.html'), name="merci"),
+    url(r'^validercaisse/$', views.lacaisse , name='caisse'),
     url(r'^sinalbug/$', views.signal_bug, name='bug'),
     url(r'^contact/$', views.contacter, name="contacter"),
 ]

@@ -16,12 +16,13 @@ from django.core.exceptions import MultipleObjectsReturned
 
 #Import de model
 from .models import (Categorie, Produit, SousCategorie,
-                    CompteUser, Contact, Panier, Bug)
+                    CompteUser, Contact, Panier, Bug, 
+                    AvisDemande, Commande)
 
 #import des formulaires
 from .forms import (CompteUserForm, ConnexionForm, NewsletterForm, 
                     ParagraphErrorList, PasswordChangeForm, ProfilForm,
-                    BugForm, ContactUsForm)
+                    BugForm, ContactUsForm, PayementForm)
 
 # Views
 
@@ -220,6 +221,7 @@ def connexion(request):
 @sensitive_post_parameters('user','password')
 def deconnexion(request):
     logout(request)
+    messages.success(request, "vous êtes déconnecté avec succès")
     return redirect("boutique:accueil")
 
 # Gestion du profil
@@ -320,9 +322,14 @@ def ajout_au_panier(request):
             panier.nom_du_panier()
         else:
             panier = panier.last()
-        id=int(request.GET.get('ajout-panier'))
-        produit = Produit.objects.get(id=id)
-        produit_panier = panier.produits.filter(id=produit.id)
+
+        try:
+            id=int(request.GET.get('ajout-panier'))
+            produit = Produit.objects.get(id=id)
+            produit_panier = panier.produits.filter(id=produit.id)
+        except:
+            return Http404
+
         quatite_un_produit = 0 #initialisation
         if produit_panier:
             quatite_un_produit += 1
@@ -352,20 +359,123 @@ def ajout_au_panier(request):
 
     return render(request, 'boutique/panier.html', locals())
 
-def sup_item_panier(request):
-    pass
+@login_required(login_url='boutique:connexion')
+def sup_item_panier(request, id_produit): #bug
+    try:
+        id=int(id_produit)
+        paniersup = Panier.objects.filter(user=CompteUser.objects.get(user=request.user), traite=False)
+    except ValueError:
+        return Http404
+    if not paniersup.exists():
+        raise Http404
+    else:
+        paniersup = paniersup.last()
+        paniersup.produits.get(id=id).clear()
+        paniersup.save()
+        # if lenprod ==0:
+        #     return redirect('boutique:boutique')
+    return render(request, 'boutique/panier.html', locals())
 
 
-def acheter(request, id_produit):
-    # profil = get_object_or_404(CompteUser, user=request.user.username)
-    # panier=Panier.objects.filter(user=profil)
-    # if not panier.exists():
-    produit = get_object_or_404(Produit,id=id_produit)
-    # else:
-    #     pass
 
+def acheter(request, id_produit): #bug
+    if request.user.is_authenticated:
+        profil = CompteUser.objects.get(user=request.user)
+        panier = Panier.objects.filter(user=profil, traite=False)
+        if not panier.exists():
+            produit = get_object_or_404(Produit,id=id_produit)
+        else:
+            produit = get_object_or_404(Produit,id=id_produit)
+            panier= panier.last()
+            panier.produits.add(produit)
+            panier.save()
+    else:
+        produit = get_object_or_404(Produit,id=id_produit)
+        quantite_produit = 1
+        prix_produit = quantite_produit * produit.prix
+
+    formu = PayementForm(request.POST or None)
+    envoi = False
+    if formu.is_valid():
+        nom = formu.cleaned_data['nom']
+        prenom = formu.cleaned_data['prenom']
+        email = formu.cleaned_data['email']
+        adress = formu.cleaned_data['adress']
+        telephone = formu.cleaned_data['telephone']
+        newsletter = formu.cleaned_data['newsletter']
+
+        envoi = True #envoi de mail
+        #enregistrement du contact
+        contact = Contact.objects.filter(email=email)
+        if contact.exists(): 
+            contact=contact.first()
+            contact.nom = nom
+            contact.prenom = prenom
+            contact.adress = adress
+            contact.numero_de_telephone = telephone
+            contact.save()
+        else:
+            contact = Contact.objects.create(prenom=prenom, numero_de_telephone=telephone, email=email, adress=adress)
+            contact.save()
+        
+        #enregistrement de la commande
+
+        if produit:
+            produit.quantite -=1
+            produit.save()
+
+        if request.user.is_authenticated:
+            if panier:
+                panier.traite = True
+                panier.save()
+                commande = Commande.objects.create(contact=contact, panier=panier)
+                commande.save()
+            else:
+                commande = Commande.objects.create(contact=contact, produit=produit)
+                commande.save() 
+        else:
+            commande = Commande.objects.create(contact=contact, produit=produit)
+            commande.save()
+
+        return redirect('boutique:merci')
     return render(request, 'boutique/achat.html', locals()) 
 
+@login_required()
+def lacaisse(request):
+    profil = CompteUser.objects.get(user=request.user)
+    panier = Panier.objects.filter(user=profil, traite=False)
+    panier = panier.last()
+
+    formu = PayementForm(request.POST or None)
+    envoi = False
+    if formu.is_valid():
+        nom = formu.cleaned_data['nom']
+        prenom = formu.cleaned_data['prenom']
+        email = formu.cleaned_data['email']
+        adress = formu.cleaned_data['adress']
+        telephone = formu.cleaned_data['telephone']
+        newsletter = formu.cleaned_data['newsletter']
+
+        envoi = True #envoi de mail
+        #enregistrement du contact
+        contact = Contact.objects.filter(email=email)
+        if contact.exists(): 
+            contact=contact.first()
+            contact.nom = nom
+            contact.prenom = prenom
+            contact.adress = adress
+            contact.numero_de_telephone = telephone
+            contact.save()
+        else:
+            contact = Contact.objects.create(prenom=prenom, numero_de_telephone=telephone, email=email, adress=adress)
+            contact.save()
+
+        panier.traite = True
+        panier.save()
+        commande = Commande.objects.create(contact=contact, panier=panier)
+        commande.save()
+        return redirect('boutique:merci')
+    return render(request, 'boutique/caisse.html', locals())
 
 def signal_bug(request):
     form = BugForm(request.POST or None)
@@ -382,7 +492,26 @@ def signal_bug(request):
 def contacter(request):
     form = ContactUsForm(request.POST or None)
     if form.is_valid():
-        pass
+        prenom = form.cleaned_data['prenom']
+        email = form.cleaned_data['email']
+        demande = form.cleaned_data['demande']
+        newsletter = form.cleaned_data['newsletter']
+
+        un_avis = AvisDemande.objects.create(prenom=prenom,
+                                            email=email,
+                                            demande=demande)
+        un_avis.save()
+        messages.success(request, "Merci de nous avoir écrit. Nous allons vous répondre sous peu.")
+        envoie = True #envoie de mail
+        if newsletter == True:
+            contact= Contact.objects.filter(email=email)
+            if contact.exists():
+                contact = contact.first().save()
+            else:
+                contact = Contact.objects.create(prenom=prenom, email=email)
+                contact.save()
+
+        return redirect('boutique:accueil')
     return render(request, 'boutique/contacter.html', locals())
 
    
