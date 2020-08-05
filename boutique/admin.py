@@ -1,11 +1,14 @@
 from django.contrib import admin 
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from django.contrib.contenttypes.admin import GenericTabularInline
 
 from .models import (Produit, SousCategorie, Categorie, 
                     CompteUser, Contact, Media, 
-                    Panier, Bug, Commande, AvisDemande)
-# Register your models here.
+                    Panier, Bug, Commande, AvisDemande,
+                    PanierItem)
+
+# Register Admin.
 
 class CategorieSousCategorieInline(admin.TabularInline):
    
@@ -83,16 +86,10 @@ class ProduitAdmin(admin.ModelAdmin):
     list_per_page = 20
     actions = ['promotion']
     
-
     def promotion(self,request, queryset):
         queryset.update(taux_reduction=True)
     promotion.short_description = "Mise en Promotion"
     
-
-class CategorieSousCategorieInline(admin.TabularInline):
-    model = Categorie.souscategorie.through
-
-
 @admin.register(Categorie)
 class CategorieAdmin(admin.ModelAdmin):
     inlines = [CategorieSousCategorieInline]
@@ -138,3 +135,7 @@ class AvisDemandeAdmin(admin.ModelAdmin):
     list_display = ['__str__', 'date', 'email']
     readonly_fields = ['date', 'prenom', 'demande']
 
+
+@admin.register(PanierItem)
+class PanierItem(admin.ModelAdmin): 
+    pass

@@ -25,31 +25,20 @@ SECRET_KEY = 'tbwiiy^g@tb-!z+qu0qhhlqn6_%u+sife#5pl=o385=5=cej&('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-EMAIL_BACKEND = [
-    'django.core.mail.backends.smtp.EmailBackend'
-]
-if DEBUG:
-    EMAIL_BACKEND += [
-        'django.core.mail.backends.filebased.EmailBackend',
-    ]
-    EMAIL_FILE_PATH = '/tmp/app-messages'
-
 
 ALLOWED_HOSTS = ['127.0.0.1']
-EMAIL_HOST = ['localhost']
-EMAIL_PORT = ['25']
-SERVAL_EMAIL = 'no-reply@soma-e.com'
-EMAIL_SUBJECT_PREFIX = ['soma-e']
-EMAIL_USE_LOCALTIME = True
 ADMINS = (
-    ('asus', 'seria.medard.pge2018@gmail.com'),
-)
+        ('asus', 'seria.medard.pge2018@gmail.com'),
+    )
+
 
 MANAGERS = ADMINS
 
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -151,6 +140,8 @@ DEFAULT_CHARSET = 'utf-8'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# path media such as image
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 LOGIN_URL = '/boutique/connexion/'

@@ -21,30 +21,28 @@ def get_variable_panier(request):
     if request.user.is_authenticated:
         try:
             panier = Panier.objects.filter(user=CompteUser.objects.get(user=request.user), traite=False)
-            panierproduit = Panier.objects.get(user=CompteUser.objects.get(user=request.user), traite=False).produits.all()
         except UnboundLocalError:
             quantite_dans_panier = 0
-        except MultipleObjectsReturned:
-            panierproduit = Panier.objects.filter(user=CompteUser.objects.get(user=request.user), traite=False)
-            panierproduit = panierproduit.last().produits.all()
-        except ObjectDoesNotExist:
-            panierproduit = []
-        if panier:
+        # except ObjectDoesNotExist:
+        #     panierproduit = []
+        if panier.exists():
             panier = panier.last()
+            panierproduit = panier.produits.all()
             quantite_dans_panier = panier.quantite
-            prix_total = panier.prix
+            prix_total = panier.prix   
         else:
             quantite_dans_panier = 0
             prix_total = 0
+            panierproduit = []
     else:
         quantite_dans_panier = 0
         prix_total = 0
         panierproduit = []
-    
-        # quantite_dans_panier = 0
-        # prix_total = 0
+        panier = []
+
     return {
         'quantite_dans_panier':quantite_dans_panier,
         'prix_total':prix_total,
         'panierproduit':panierproduit,
+        'panier':panier,
         }

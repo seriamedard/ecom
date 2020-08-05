@@ -96,6 +96,7 @@ class Produit(models.Model):
         verbose_name_plural = 'produits'
         ordering = ['-date_de_creation']
 
+
     def __str__(self):
         return self.nom
 
@@ -121,11 +122,22 @@ class CompteUser(models.Model):
     def __str__(self):
         return "Profil de {0}".format(self.user.username)
 
+class PanierItem(models.Model):
+    user = models.ForeignKey(CompteUser, on_delete=models.CASCADE, blank=True, null=True)
+    produits = models.ForeignKey(Produit, blank=True, null=True, on_delete=models.CASCADE)
+    prix_du_produit = models.FloatField('Prix total du Poduit', blank=True, default=0)
+    quantite_du_produit = models.PositiveIntegerField('Qté total du Produit', default=0)
+
+    def __str__(self):
+        return self.produits.nom
+
+    class Meta:
+        verbose_name = "Panier intermediaire"
 
 class Panier(models.Model):
     nom = models.CharField(max_length=300, blank=True)
     date_de_creation = models.DateTimeField('Date de création', auto_now_add=True)
-    produits = models.ManyToManyField(Produit, blank=True, related_name='produits')
+    produits = models.ManyToManyField(PanierItem, blank=True, related_name='produits_inter')
     user = models.ForeignKey(CompteUser, related_name='utilisateur', on_delete=models.CASCADE, blank=True, null=True)
     quantite = models.PositiveIntegerField('Quantité', default=0)
     prix = models.PositiveIntegerField('Prix',default=0)
@@ -139,11 +151,8 @@ class Panier(models.Model):
     def __str__(self):
         return self.nom
 
-    def save(self, *args, **kwargs):
-        self.quantite_un_produit = 0
-        self.prix_produit = 0
-        super().save(*args, **kwargs)
-    
+         
+
 class Contact(models.Model):
     prenom = models.CharField(max_length=100)
     nom = models.CharField(max_length=100, blank=True)
@@ -156,11 +165,18 @@ class Contact(models.Model):
 
 
 class Commande(models.Model):
+    METHOD_PAYEMENT_CHOICES = [
+        ('V', 'Visa'),
+        ('P', 'PayPal'),
+        ('L', 'Livraison'),
+    ]
+
     nom = models.CharField(max_length=500)
     date = models.DateTimeField(auto_now_add=True)
     panier = models.OneToOneField(Panier, blank=True, on_delete=models.CASCADE, null=True)
     contact = models.ForeignKey(Contact, blank=True, null=True, on_delete=models.CASCADE)
     produit = models.ForeignKey(Produit, blank=True, null=True, on_delete=models.CASCADE)
+    method = models.CharField(max_length = 1, choices = METHOD_PAYEMENT_CHOICES, help_text ="Choix d'un mode de payement", default="L")
     valider = models.BooleanField(default=False)
 
     def __str__(self):
@@ -182,7 +198,6 @@ class Bug(models.Model):
     
     def __str__(self):
         return "{}...".format(self.description[:15])
-
 
 
 class AvisDemande(models.Model):

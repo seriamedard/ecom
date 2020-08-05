@@ -1,0 +1,13 @@
+{% extends 'boutique/index.html' %}
+{% block title%} Fin de la transaction sur somae {% endblock %}
+{% block content %}
+<div class="container p-0">
+    <div class="jumbotron">
+        <h1 class="display-4">Merci !!!</h1>
+        <p class="lead">Votre commande a été bien enregistré, mais l'aventure s'arrête ici.</p>
+        <hr class="my-4">
+        <p>Merci d'avoir visité le site!</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'boutique:accueil' %}" role="button">L'accueil</a>
+      </div>
+</div>
+{% endblock %}

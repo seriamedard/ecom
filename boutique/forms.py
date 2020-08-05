@@ -219,3 +219,5 @@ class PayementForm(forms.Form):
                                 required=False,
                                 widget=forms.CheckboxInput(attrs={
                                 }))
+
+

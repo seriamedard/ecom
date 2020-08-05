@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="{% static 'boutique/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'boutique/css/app.css' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="{% static 'boutique/img/logo.png' %}"/>
     <!--Typographie-->
     <link href="https://fonts.googleapis.com/css?family=Hind:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
     <link href="//db.onlinewebfonts.com/c/02a0efa4275f78836dfc89db9e21feea?family=Futura+Book" rel="stylesheet" type="text/css"/>
     <link href="//db.onlinewebfonts.com/c/4bfead3a244dd227921e53b4d31c36ed?family=AltonaBold" rel="stylesheet" type="text/css"/>
     <title> {% block title %}base{% endblock %}</title>
@@ -69,7 +69,7 @@
                     {%endblock%}
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon ml-n2-2 "> 
+                    <span class="navbar-toggler-icon ml-n2"> 
                         <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-filter-right" fill="#3a3e59" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/>
                         </svg>
@@ -197,7 +197,9 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                                             {% if user.is_authenticated %}
-                                            <a href="{% url 'boutique:caisse' %}" type="button" class="btn btn-primary">Caisse</a>
+                                            {% if panier %}
+                                                <a href="{% url 'boutique:caisse' %}" type="button" class="btn btn-primary">Caisse</a>
+                                            {% endif %}
                                             {% endif %}
                                         </div>
                                     </div>
@@ -214,11 +216,11 @@
     <!--bar categorie-->
     <!--block content-->
     
-   <div class="container-fluid bg-dark">
+   <div class="bg-dark">
         <div class="container">
             <nav class="categories navbar navbar-expand-lg text-white">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon ml-n5">
+                    <span class="navbar-toggler-icon ml-n4">
                         <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-card-list" fill="#fff" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                             <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
@@ -290,7 +292,7 @@
 
    <!--Le pied de page-->
    <footer class="mt-4">
-    <div class="container-fluid bg-light">
+    <div class="bg-light">
         <div class="container">
             <div class="section row pt-4">
                 <div class="col-sm-12 col-lg-3">

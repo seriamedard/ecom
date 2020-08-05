@@ -32,7 +32,7 @@
         <hr>
     </div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-12 col-lg-4">
           <div class="list-group" id="list-tab" role="tablist">
             {% for panier in liste_panier %}
             {% if forloop.first %}
@@ -40,17 +40,27 @@
             {% else %}
             <a class="list-group-item list-group-item-action" id="list-{{panier.nom}}-list" data-toggle="list" href="#{{ panier.nom }}" role="tab" aria-controls="profile">{{ panier.nom|truncatewords:20 }} </a>
             {% endif %}
+            {% empty %}
+            <p>Pas de panier à ce jour!</p>
             {%endfor%}
           </div>
         </div>
-        <div class="col-8">
+        <div class="col-12 col-lg-8">
           <div class="tab-content" id="nav-tabContent">
+            {% for panier in liste_panier %}
             <div class="tab-pane fade show active" id="{{ panier.nom }}" role="tabpanel" aria-labelledby="list-{{panier.nom}}-list">
-                ...
+              <table class="table table-bordered">
+                {% for prod in panier.produits.all %}
+                <tr>
+                  <th><img src="{{prod.produits.image.url}}" width="25px" height="25px" alt="{{produit.nom}}"></th>
+                  <th class="font-weight-light">{{ prod.produits.nom }}</th>
+                  <th class="text-center">{{prod.quantite_du_produit }}</th>
+                  <th style="color: orange;">{{prod.prix_du_produit|floatformat }} <span class="font-weight-normal">{{ devise }}</span></th>
+                </tr>
+                {% endfor %}
+              </table>
             </div>
-            <div class="tab-pane fade" id="{{ panier.nom }}" role="tabpanel" aria-labelledby="list-{{panier.nom}}-list">
-                ...
-            </div>
+            {% endfor %}
             
           </div>
         </div>

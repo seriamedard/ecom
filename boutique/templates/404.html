@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-{% load statatic %}
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
-    <!--Fichier static-->
-    <link rel="stylesheet" href="{% static 'boutique/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'boutique/css/app.css' %}">
-    <!--Typographie-->
-    <link href="//db.onlinewebfonts.com/c/02a0efa4275f78836dfc89db9e21feea?family=Futura+Book" rel="stylesheet" type="text/css"/>
-    <link href="//db.onlinewebfonts.com/c/4bfead3a244dd227921e53b4d31c36ed?family=AltonaBold" rel="stylesheet" type="text/css"/>
-    <title>Page not found</title>
-</head>
-<body>
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
-</html>
+{% extends 'boutique/index.html' %}
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Ooops !</h1>
+    <p class="lead">La page est introuvable !</p>
+    <hr class="my-4">
+    <p> Consultez tous nos stocks de produit en cliquant <a href="{% url 'boutique:boutique' %}">ici</a></p>
+    <a class="btn btn-primary btn-lg" href="{% url 'boutque:accueil' %}" role="button">L'accueil</a>
+</div>
+{% endblock %}

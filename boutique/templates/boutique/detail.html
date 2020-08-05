@@ -92,17 +92,19 @@
         </div>
         <div class="dispo">
             {% if un_produit.disponible %}
-            <p class="font-weight-bold">Disponible: <span class="font-italic">En stock</span></p>
+            <p class="font-weight-bold">Disponible: <span class="font-italic font-weight-light">En stock</span></p>
             {% else %}
             <p class="font-weight-bold">Disponible: <span class="font-italic">Non</span></p>
             {% endif %}
         </div>
-        <form class=" d-inline-flex">
+        <form class=" d-inline-flex" action="{% url 'boutique:ajout_au_panier' %}" method="POST">
+            {% csrf_token %}
             <div class="form-group">
                 <label for="selectquantite">Qté: </label>
-                <input type="number"  class="form-control" id="selectquantite" style="width: 5rem;" min="1" max="{{un_produit.quantite|add:10}}" value="1">
+                <input type="number"  class="form-control" id="selectquantite" style="width: 5rem;" min="1" max="{{un_produit.quantite|add:5}}" value="1" name="qte">
+                <input type="hidden" class="hidden" value="{{ un_produit.id }}" name="id">
                 <div class="d-flex-inline">
-                    <a  href="" type="submit" class="btn btn-outline-primary my-2">Ajouter au panier</a>
+                    <button type="submit" class="btn btn-outline-primary my-2">Ajouter au panier</button>
                     <a  href="{% url 'boutique:achat' id_produit=un_produit.id %}" type="" class="btn btn-outline-primary my-2">Acheter</a>
                 </div>
                 
