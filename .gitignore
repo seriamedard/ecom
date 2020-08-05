@@ -1,1 +1,5 @@
-/myenv
+env/
+ecom/__pycache__
+boutique/__pycache__/
+boutique/migrations/__pycache__/
+
