@@ -26,7 +26,7 @@ SECRET_KEY = 'tbwiiy^g@tb-!z+qu0qhhlqn6_%u+sife#5pl=o385=5=cej&('
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','somae.herokuapp.com']
 ADMINS = (
         ('asus', 'seria.medard.pge2018@gmail.com'),
     )
