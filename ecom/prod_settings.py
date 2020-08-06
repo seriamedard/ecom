@@ -17,4 +17,5 @@ DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 
 DROPBOX_OAUTH2_TOKEN = 'tpsk6m7heTAAAAAAAAAAAXh5_wXiZhX7m5QV44jjRL_AoiG93mIrH3f9f97rMzAb'
 
-DROPBOX_ROOT_PATH = os.path.join(BASE_DIR, 'media')
+DROPBOX_ROOT_PATH = 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace("\\", '/')

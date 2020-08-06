@@ -36,5 +36,3 @@ if settings.DEBUG:
         path('__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
 
-if os.environ.get('ENV') == "PRODUCTION":
-    urlpatterns += static(settings.MEDIA_URL, document_root=prod_settings.DROPBOX_ROOT_PATH)
