@@ -178,21 +178,26 @@ def inscription(request):
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
         envoi = True
-        user = User.objects.create_user(username=username, 
-                            email=email, 
-                            password=password,
-                            )
-        user.first_name = first_name
-        user.last_name = last_name
-        user.save()
-        profil = CompteUser(user=user)
-        profil.save()
-        user = authenticate(username=username, password=password)
-        
-        if user:
-            login(request, user)
-            messages.add_message(request, messages.INFO, "Vous êtes connecté!")
-            return redirect('boutique:profil')
+        try:
+            with transaction.atomic():
+                user = User.objects.create_user(username=username, 
+                                    email=email, 
+                                    password=password,
+                                    )
+                user.first_name = first_name
+                user.last_name = last_name
+                user.save()
+                profil = CompteUser(user=user)
+                profil.save()
+                user = authenticate(username=username, password=password)
+                
+                if user:
+                    login(request, user)
+                    messages.add_message(request, messages.INFO, "Vous êtes connecté!")
+                    return redirect('boutique:accueil')
+        except IntegrityError:
+            messages.warning(request, "Une erreur est arrivée, veillez récommencer!")
+            return redirect('boutique:accueil')
     
     return render(request, 'boutique/inscription.html', locals())
 

@@ -6,8 +6,13 @@ from django.core.exceptions import MultipleObjectsReturned,ObjectDoesNotExist
 
 def get_variable(request):
     devise = "FCFA"
-    liste_categories = Categorie.objects.all()
-    liste_sous_categories = SousCategorie.objects.all().order_by('nom')
+    try:
+        liste_categories = Categorie.objects.all()
+        liste_sous_categories = SousCategorie.objects.all().order_by('nom')
+    except ObjectDoesNotExist:
+        liste_categories = []
+        liste_sous_categories = []
+
     form = NewsletterForm()
 
     return {
@@ -23,8 +28,9 @@ def get_variable_panier(request):
             panier = Panier.objects.filter(user=CompteUser.objects.get(user=request.user), traite=False)
         except UnboundLocalError:
             quantite_dans_panier = 0
-        # except ObjectDoesNotExist:
-        #     panierproduit = []
+        except ObjectDoesNotExist:
+            panierproduit = []
+    
         if panier.exists():
             panier = panier.last()
             panierproduit = panier.produits.all()
