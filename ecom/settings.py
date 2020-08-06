@@ -78,6 +78,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'ecom.context_processors.get_variable',
                 'ecom.context_processors.get_variable_panier',
+                'django.template.context_processors.media',
             ],
         },
     },
