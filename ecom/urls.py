@@ -17,8 +17,9 @@ from django.contrib import admin
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.urls import path, include
-from . import settings
+from . import settings, prod_settings
 from boutique.views import accueil, ajout_au_panier
+import os
 
 urlpatterns = [
     path('', accueil),
@@ -34,3 +35,6 @@ if settings.DEBUG:
     urlpatterns=[
         path('__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
+
+if os.environ.get('ENV') = "PRODUCTION":
+    urlpatterns += static(settings.MEDIA_URL, document_root=prod_settings.DROPBOX_ROOT_PATH)
