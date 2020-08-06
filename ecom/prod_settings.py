@@ -6,7 +6,7 @@ TEMPLATE_DEBUG = False
 
 DATABASES['default'] = dj_database_url.config()
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 ALLOWED_HOSTS = ['somae.herokuapp.com']
 
