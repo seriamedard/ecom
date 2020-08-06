@@ -28,9 +28,12 @@ def get_variable_panier(request):
             panier = Panier.objects.filter(user=CompteUser.objects.get(user=request.user), traite=False)
         except UnboundLocalError:
             quantite_dans_panier = 0
+            panier = []
+            prix_total = 0
         except ObjectDoesNotExist:
             panierproduit = []
-    
+            panier = []
+
         if panier.exists():
             panier = panier.last()
             panierproduit = panier.produits.all()
