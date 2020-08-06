@@ -22,7 +22,7 @@ from boutique.views import accueil, ajout_au_panier
 
 urlpatterns = [
     path('', accueil),
-    path('admin/', admin.site.urls),
+    path('medard/admin/', admin.site.urls),
     path('ajout_au_panier/', ajout_au_panier, name='ajout_au_panier'),
     path('boutique/', include('boutique.urls', namespace='boutique')),
 ]
