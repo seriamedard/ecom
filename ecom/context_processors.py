@@ -34,7 +34,7 @@ def get_variable_panier(request):
             panierproduit = []
             panier = []
 
-        if panier.exists():
+        if panier:
             panier = panier.last()
             panierproduit = panier.produits.all()
             quantite_dans_panier = panier.quantite
