@@ -69,7 +69,7 @@ class Produit(models.Model):
         upload_to='images/', 
         default='images/photo.jpg'
         )
-    picture = models.URLField(default="")
+    picture = models.URLField(default="", blank=True, null=True)
     quantite = models.IntegerField('quantité', default=1)
     premier_prix = models.FloatField(default=0.0, max_length=None)
     prix = models.FloatField(default=0.0)
