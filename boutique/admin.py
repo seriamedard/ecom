@@ -59,7 +59,7 @@ class ProduitAdmin(admin.ModelAdmin):
     form = ProduitAdminForm
     fieldsets = (
         ('Titre',{
-            'fields':('nom','slug', 'description', 'image', 'date_de_creation')
+            'fields':('nom','slug', 'description', 'image','picture', 'date_de_creation')
         }),
         ('Prix-Qté',{
             'classes':('collapse',),
