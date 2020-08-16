@@ -60,19 +60,20 @@
    <div class="container">
         <div class="navigation">
             <nav class="navbar navbar-expand-lg pl-0">
-                <a href="{% url 'boutique:accueil' %}" class="navbar-brand">
-                    <img classe="logo" width="65" height="65" src="{% static 'boutique/img/logo.png' %}" alt="logo soma-electronic" title="Accueil">
-                </a>
-                <div class="navig-plus mr-auto">
-                    {%block search%}
-                    
-                    {%endblock%}
+                <div class="d-flex align-items-center">
+                    <a href="{% url 'boutique:accueil' %}" class="navbar-brand">
+                        <img classe="logo" width="65" height="65" src="{% static 'boutique/img/logo.png' %}" alt="logo soma-electronic" title="Accueil">
+                    </a>
+                    <div class="navig-plus mr-auto">
+                        {%block search%}
+                        
+                        {%endblock%}
+                    </div>
                 </div>
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon ml-n2"> 
-                        <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-filter-right" fill="#3a3e59" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/>
-                        </svg>
+                        <svg id="Layer_1" fill="#3a3e59" enable-background="new 0 0 512 512" height="1.5em" viewBox="0 0 512 512" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="m464.883 64.267h-417.766c-25.98 0-47.117 21.136-47.117 47.149 0 25.98 21.137 47.117 47.117 47.117h417.766c25.98 0 47.117-21.137 47.117-47.117 0-26.013-21.137-47.149-47.117-47.149z"/><path d="m464.883 208.867h-417.766c-25.98 0-47.117 21.136-47.117 47.149 0 25.98 21.137 47.117 47.117 47.117h417.766c25.98 0 47.117-21.137 47.117-47.117 0-26.013-21.137-47.149-47.117-47.149z"/><path d="m464.883 353.467h-417.766c-25.98 0-47.117 21.137-47.117 47.149 0 25.98 21.137 47.117 47.117 47.117h417.766c25.98 0 47.117-21.137 47.117-47.117 0-26.012-21.137-47.149-47.117-47.149z"/></svg>
                     </span>
    
                 </button>
