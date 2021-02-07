@@ -1,7 +1,10 @@
 from boutique.models import Categorie, SousCategorie, Panier, CompteUser
 from boutique.forms import NewsletterForm, ParagraphErrorList
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.decorators import login_required
+
+
+# Exceptions
 from django.core.exceptions import MultipleObjectsReturned,ObjectDoesNotExist
 
 def get_variable(request):

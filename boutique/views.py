@@ -1,15 +1,19 @@
 from django.shortcuts import render, get_object_or_404, Http404, redirect
-from django.urls import reverse, NoReverseMatch, resolve, Resolver404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.views.decorators.debug import sensitive_variables
+from django.urls import reverse, NoReverseMatch, resolve, Resolver404
 from django.views.decorators.debug import sensitive_post_parameters
-from django.contrib import messages
-from django.contrib.auth.models import User
+from django.views.decorators.debug import sensitive_variables
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
-from django.db.models import Q
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 from django.db import transaction, IntegrityError
+from django.contrib.auth.models import User
+from django.utils.html import strip_tags
+from django.contrib import messages
+from django.conf import settings
+from django.db.models import Q
 from datetime import datetime
 
 # exception
@@ -28,6 +32,18 @@ from .forms import (CompteUserForm, ConnexionForm, NewsletterForm,
 
 # Views
 
+# Email
+def envoie_mail(request, email, sujet, context):
+    template = render_to_string('boutique/email_form1.html', context)
+    email = EmailMultiAlternatives(
+        sujet,
+        template,
+        settings.EMAIL_HOST_USER,
+        [f'{email}']
+        )
+    email.attach_alternative(template, "text/html")
+    email.send(fail_silently=False)
+
 # Stock dans la boutique avec pagination
 def Boutique(request):
     template_name = 'boutique/tous_produits.html'
@@ -41,6 +57,7 @@ def Boutique(request):
         liste_produits = paginator.page(1)
     except EmptyPage:
         liste_produits = paginator.page(paginator.num_pages)
+
     resultat = len(liste_produits)
     return render(request,template_name, locals())
 
@@ -50,13 +67,12 @@ def produit_du_sous_categorie(request, id_sous_categorie):
     try:
         id = id_sous_categorie
         liste_produits = get_object_or_404(SousCategorie, pk=id).produit_set.all().order_by('-date_de_creation')
-    except ValueError:
-        return Http404
     except:
         return Http404
 
     paginator = Paginator(liste_produits, 6, orphans=2)
     page = request.GET.get('page')
+
     try:
         liste_produits = paginator.page(page)
     except PageNotAnInteger:
@@ -78,7 +94,6 @@ def produit_dans_categorie(request, id_categorie, id_sous_categorie):
             Q(categorie=get_object_or_404(Categorie, id=id_categorie)) & 
             Q(sous_categorie=get_object_or_404(SousCategorie, id=id_sous_categorie))
             ).order_by('-date_de_creation')
-
     except ValueError:
         return Http404
 
@@ -91,6 +106,7 @@ def produit_dans_categorie(request, id_categorie, id_sous_categorie):
         liste_produits = paginator.page(1)
     except EmptyPage:
         liste_produits = paginator.page(paginator.num_pages)
+
     resultat = len(liste_produits)
     return render(request, 'boutique/produit_categorie.html', locals())
 
@@ -104,7 +120,6 @@ class DetailProduit(DetailView):
         un_produit = super(DetailProduit, self).get_object()
         un_produit.etoile +=1
         un_produit.save()
-
         return un_produit
 
 # Accueil
@@ -126,6 +141,7 @@ def accueil(request):
             last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email']
             envoi = True
+
             try:
                 with transaction.atomic():
                     contact = Contact.objects.filter(email=email)
@@ -139,17 +155,27 @@ def accueil(request):
                     messages.info(request, "Vous êtes maintenant inscrit aux nouvelles de soma électronic")
             except IntegrityError:
                 form.errors['internal'] = "Une erreur interne est apparue. Merci de récommencer."
+        
         else:
             errors = form.errors.items()
-            messages.warning(request, "Une erreur est arrivée, veillez récommencer!")
+            messages.warning(request, "Une erreur est arrivée, veillez récommencer !")
+       
+        if envoi==True:
+            try:
+                envoie_mail(request, email, 'Inscription au Newsletter', context=locals())
+            except:
+                pass
+
     else:
         form = NewsletterForm()
+
     resultat = len(liste_produits)      
     return render(request, 'boutique/index.html', locals())
 
 # Traitement de recherche
 def recherche(request):
     query = request.GET.get('query')
+
     try:
         if not query:
             messages.info(request, "Veillez écrire le nom d'un produit pour la recherche.")
@@ -178,6 +204,7 @@ def inscription(request):
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
         envoi = True
+
         try:
             with transaction.atomic():
                 user = User.objects.create_user(username=username, 
@@ -204,8 +231,8 @@ def inscription(request):
 # La connexion
 @sensitive_variables('username', 'password', 'user')
 def connexion(request):
-    
     error = False
+
     if request.method == "POST":
         form = ConnexionForm(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
@@ -217,14 +244,13 @@ def connexion(request):
                 redirection = request.GET.get('next')
 
                 if redirection:
-                    return redirect(redirection)
+                    return redirect(reverse(redirection))
                 else:
                     return redirect('boutique:accueil')
             else:
                 error = True
     else:
         form = ConnexionForm()
-
     return render(request, 'boutique/connexion.html', locals())
 
 # La deconnexion
@@ -248,6 +274,7 @@ def profil(request):
 @login_required(login_url='boutique:connexion')
 def modif_profil(request):
     form = ProfilForm(request.POST, error_class=ParagraphErrorList)
+
     if request.method == 'POST':
         user = request.user 
         profil_user =get_object_or_404(CompteUser, user=user)
@@ -319,10 +346,8 @@ def changer_mot_de_passe(request):
                         error = True
             except IntegrityError:
                 form.errors['internal'] = 'Une erreur interne est apparue. Merci de récommencer'
-
     else:
         form = PasswordChangeForm(request.POST or None)
-    
     return render(request, 'boutique/changemdp.html', locals())
 
 # Traitement du panier
@@ -351,7 +376,6 @@ def ajout_au_panier(request):
                     panierinter = panier.produits.filter(produits=produit, user=CompteUser.objects.get(user=request.user))
                 except:
                     return Http404
-                    # pass
 
                 #initialisation
                 if panierinter: #s'il y'a deja le produit dans le panier
@@ -381,6 +405,7 @@ def ajout_au_panier(request):
                     panier.quantite += panierinter.quantite_du_produit
                     panier.save()
                     messages.success(request, "Produit ajouté au panier!")
+
         except IntegrityError:
             messages.warning(request, "Une erreur est apparue en interne. Merci de récommencer")
             return redirect('boutique:accueil')
@@ -435,6 +460,7 @@ def ajout_au_panier(request):
                     panier.quantite += panierinter.quantite_du_produit
                     panier.save()
                     messages.success(request, "Produit ajouté au panier!")
+
         except IntegrityError:
             messages.warning(request, "Une erreur est apparue en interne. Merci de récommencer")
             return redirect('boutique:accueil')
@@ -586,19 +612,19 @@ def acheter(request, id_produit):
 # Reglement à la caisse
 @login_required(login_url='boutique:connexion')
 def lacaisse(request):
-
     formu = PayementForm(request.POST or None)
     envoi = False
+
     if formu.is_valid():
         nom = formu.cleaned_data['nom']
         prenom = formu.cleaned_data['prenom']
+        last_name = prenom
         email = formu.cleaned_data['email']
         adress = formu.cleaned_data['adress']
         telephone = formu.cleaned_data['telephone']
         newsletter = formu.cleaned_data['newsletter']
         method = request.POST.get('payement')
 
-        envoi = True #envoi de mail
         #enregistrement du contact
         try:
             with transaction.atomic():
@@ -616,6 +642,11 @@ def lacaisse(request):
                 else:
                     contact = Contact.objects.create(prenom=prenom, numero_de_telephone=telephone, email=email, adress=adress)
                     contact.save()
+                    try:
+                        if newsletter == True:
+                            envoie_mail(request, email, 'Inscription au Newsletter', context=locals())
+                    except:
+                        pass
 
                 panier.traite = True
                 panier.save()
@@ -636,6 +667,7 @@ def lacaisse(request):
 def signal_bug(request):
     form = BugForm(request.POST or None)
     envoi = False
+    
     if form.is_valid():
         description = form.cleaned_data['description']
         bug = Bug.objects.create(description=description)
@@ -650,6 +682,7 @@ def contacter(request):
     form = ContactUsForm(request.POST or None)
     if form.is_valid():
         prenom = form.cleaned_data['prenom']
+        last_name = prenom #pour le mail
         email = form.cleaned_data['email']
         demande = form.cleaned_data['demande']
         newsletter = form.cleaned_data['newsletter']
@@ -659,17 +692,24 @@ def contacter(request):
                                             demande=demande)
         un_avis.save()
         messages.success(request, "Merci de nous avoir écrit. Nous allons vous répondre sous peu.")
-        envoie = True #envoie de mail
         if newsletter == True:
-            contact= Contact.objects.filter(email=email)
-            if contact.exists():
-                contact = contact.first().save()
-            else:
-                contact = Contact.objects.create(prenom=prenom, email=email)
-                contact.save()
+            try:
+                with transaction.atomic():
+                    contact= Contact.objects.filter(email=email)
+                    if contact.exists():
+                        contact = contact.first().save()
+                    else:
+                        contact = Contact.objects.create(prenom=prenom, email=email)
+                        contact.save()
+                envoie_mail(request, email, 'Inscription au Newsletter', context=locals())
+            except:
+                pass
 
         return redirect('boutique:accueil')
     return render(request, 'boutique/contacter.html', locals())
+
+
+
 
    
     

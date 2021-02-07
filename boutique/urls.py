@@ -1,8 +1,7 @@
+from django.views.generic import TemplateView
 from django.conf.urls import url
 from django.urls import path
-from django.views.generic import TemplateView
 from . import views
-from .forms import ConnexionForm
 
 
 app_name = 'boutique'

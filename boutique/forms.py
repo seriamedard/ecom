@@ -1,8 +1,9 @@
-from django import forms
+from django.contrib.auth.models import User
 from django.forms.utils import ErrorList
 from django.http import HttpRequest
-from django.contrib.auth.models import User
 from .models import CompteUser
+from django import forms
+
 class ParagraphErrorList(ErrorList):
     def __str__(self):
         return self.as_divs()

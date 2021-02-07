@@ -333,7 +333,7 @@
             
                 <div class="col-sm-12 col-lg-3 mt-4">
                     <h4>Notre Service</h4>
-                    <div class="plus-info mr-4 pt-lg-4 d-flex flex-column">
+                    <div class="plus-info mr-4 mt-lg-4 d-flex flex-column">
                         <a href="" data-toggle="modal" data-target="#staticBackdrop">A propos</a>
                         <!-- Button trigger modal -->
                         
@@ -364,10 +364,10 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-lg-3 mt-4">
-                    <h4>Rester Connecter</h4>
+                    <h4>Restez Connecter</h4>
                     <div class="plus-info mr-4 pt-1 d-flex flex-column">
                         <p>Abonnez vous à notre NewsLetter pour être au courant des nouveaux produits.</p>
-                        <form action="{% url 'boutique:accueil' %}" method="POST">
+                        <form action="{% url 'boutique:accueil' %}" method="POST" class="newsletter">
                             {% csrf_token %}
                             <div class="form-group">
                                 {{form.last_name}}
@@ -405,34 +405,12 @@
     </div>
 
    </footer>
-   <!--Option javascrpt-->
-   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-   <!--firebase servise-->
-   <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-        https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
-
+   <!--scriptjavascrpt-->
+   <script  src="{% static 'boutique/jquery/dist/jquery.min.js' %}"></script>
+    <script  src="{% static 'boutique/bootstrap/dist/js/bootstrap.min.js' %}"></script>
     <script>
-    // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyAaA4ukelWeg53c33v4t7lro6jpKjCrtDk",
-            authDomain: "somae-bc67b.firebaseapp.com",
-            databaseURL: "https://somae-bc67b.firebaseio.com",
-            projectId: "somae-bc67b",
-            storageBucket: "somae-bc67b.appspot.com",
-            messagingSenderId: "623741724096",
-            appId: "1:623741724096:web:7ffe9f6ccbaa95e1eb5425",
-            measurementId: "G-0P9KLW5CRL"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
+        $('.newsletter #id_email').attr('id','id_email_1');
+        $('.newsletter #id_last_name').attr('id','prenom');
     </script>
 </body>
 </html>

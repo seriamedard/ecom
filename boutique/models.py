@@ -1,13 +1,15 @@
-import os
-import argparse
-from django.conf import settings
-from django.db import models
 from django.db.models.signals import post_delete, post_save
-from django.dispatch import receiver
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
+from django.dispatch import receiver
+from django.conf import settings
 from datetime import datetime
-# Create your models here.
+from django.db import models
+import argparse
+import os
 
+
+# Create your models here.
 
 class SousCategorie(models.Model):
     nom = models.CharField(max_length=100)
@@ -63,13 +65,13 @@ class Media(models.Model):
 
 class Produit(models.Model):
     nom = models.CharField(max_length=100)
-    description = models.TextField(max_length=500)
+    description = RichTextField()
     disponible = models.BooleanField(default=True)
     image = models.ImageField(
         upload_to='images/', 
         default='images/photo.jpg'
         )
-    picture = models.URLField(default="pass", blank=True)
+    picture = models.URLField(default="", blank=True)
     quantite = models.IntegerField('quantité', default=1)
     premier_prix = models.FloatField(default=0.0, max_length=None)
     prix = models.FloatField(default=0.0)
@@ -104,11 +106,6 @@ class Produit(models.Model):
     def reduction(self, *args, **kwargs):
         self.taux_reduction  = (1 - self.prix / self.premier_prix)*100
         return self.taux_reduction
-
-
-@receiver(post_delete, sender=Produit)
-def produit_suppression(sender, instance, **kwargs):
-    print('un produit vient d''être supprimer')
 
 
 class CompteUser(models.Model):
@@ -151,8 +148,7 @@ class Panier(models.Model):
 
     def __str__(self):
         return self.nom
-
-         
+      
 
 class Contact(models.Model):
     prenom = models.CharField(max_length=100)

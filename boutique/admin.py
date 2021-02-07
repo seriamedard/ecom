@@ -1,7 +1,7 @@
-from django.contrib import admin 
+from django.contrib.contenttypes.admin import GenericTabularInline
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from django.contrib.contenttypes.admin import GenericTabularInline
+from django.contrib import admin 
 
 from .models import (Produit, SousCategorie, Categorie, 
                     CompteUser, Contact, Media, 
@@ -21,8 +21,6 @@ class CategorieSousCategorieInline(admin.TabularInline):
 @admin.register(SousCategorie)
 class SousCategorieAdmin(admin.ModelAdmin):
     inlines = [CategorieSousCategorieInline,]
-
-
 
 class ProduitAdminForm(ModelForm):
     def clean(self):
@@ -112,6 +110,7 @@ class ContactForm(admin.ModelAdmin):
     list_per_page = 10
 
 admin.site.register(Media)
+
 @admin.register(Panier)
 class PanierAdmin(admin.ModelAdmin):
     readonly_fields = ['nom', 'produits', 'user', 'quantite', 'prix']
@@ -136,6 +135,4 @@ class AvisDemandeAdmin(admin.ModelAdmin):
     readonly_fields = ['date', 'prenom', 'demande']
 
 
-@admin.register(PanierItem)
-class PanierItem(admin.ModelAdmin): 
-    pass
+admin.site.register(PanierItem)
