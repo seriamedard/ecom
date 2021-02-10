@@ -160,6 +160,8 @@ else:
     )
     STATIC_URL = '/static/'
     print("Devellopement")
+    print(BASE_DIR)
+    print(os.path.dirname(os.path.abspath(__file__)),':Projet root')
 
 
     # Path media such as image
