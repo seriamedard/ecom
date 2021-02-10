@@ -9,7 +9,7 @@ DATABASES['default'].update(db_from_env)
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
-ALLOWED_HOSTS = ['somaelec.herokuapp.com','https://somaelec.herokuapp.com','somaele.osc-fr1.scalingo.io','https://somaele.osc-fr1.scalingo.io']
+ALLOWED_HOSTS = ['somaelec.herokuapp.com','https://somaelec.herokuapp.com','somaele.osc-fr1.scalingo.io','https://somaele.osc-fr1.scalingo.io','soma-electronic.herokuapp.com']
 
-SECRET_KEY = '$q_k_b=4q!py7d1^t3^b83xtff1_mr=2l_2po1)+x1)9rv$qy5'
+SECRET_KEY = "9L}}cE:~pa{\x0bM\tT\x0ci:L\\I\\+Q\x0cAE\t?Cmx>8HGe^tR+i-|z*\x0b^g?"
 
