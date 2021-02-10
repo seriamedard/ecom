@@ -143,7 +143,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
         os.path.join(BASE_DIR, 'static'),
     )
     STATIC_URL = '/static/'
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'ecom.storage.WhiteNoiseStaticFilesStorage'
 
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
     MEDIA_URL = '/media/'
@@ -151,7 +151,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
 
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES['default'].update(db_from_env)
-    print("Production")
+
 else:
     DEBUG = False
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -159,15 +159,12 @@ else:
         os.path.join(BASE_DIR, 'static'),
     )
     STATIC_URL = '/static/'
-    print("Devellopement")
-    print(BASE_DIR)
-    print(os.path.dirname(os.path.abspath(__file__)),':Projet root')
-
 
     # Path media such as image
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
     MEDIA_URL = '/media/'
     CKEDITOR_UPLOAD_PATH = "media/"
+    STATICFILES_STORAGE = 'ecom.storage.WhiteNoiseStaticFilesStorage'
 
 
 # Ckeditor
