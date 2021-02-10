@@ -148,6 +148,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
     PROJET_ROOT = os.path.dirname(os.path.abspath(__file__))
 
     STATIC_ROOT = os.path.join(PROJET_ROOT,'stacticfiles')
+    STATIC_URL = '/static/'
 
     STATICFILES_DIRS = (
         os.path.join(PROJET_ROOT,'static'),
