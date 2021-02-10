@@ -1,8 +1,6 @@
-
-
 import os
+from re import DEBUG
 import dj_database_url
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -12,22 +10,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'tbwiiy^g@tb-!z+qu0qhhlqn6_%u+sife#5pl=o385=5=cej&('
-
-# SECURITY WARNING: don't run with debug turned on in production!
-if os.environ.get('ENV') == 'PRODUCTION':
-    DEBUG = True
-else:
-    DEBUG = True
-
+SECRET_KEY = os.environ.get('SECRET_KEY','tbwiiy^g@tb-!z+qu0qhhlqn6_%u+sife#5pl=o385=5=cej&(')
 
 ALLOWED_HOSTS = ['127.0.0.1','somae.herokuapp.com','soma-electronic.herokuapp.com']
-ADMINS = (
-        ('asus', 'seria.medard.pge2018@gmail.com'),
-    )
 
+# ADMINS = (
+#         ('asus', 'seria.medard.pge2018@gmail.com'),
+#     )
 
-MANAGERS = ADMINS
+# MANAGERS = ADMINS
 
 # Application definition
 
@@ -83,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecom.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -93,7 +83,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -146,27 +135,37 @@ DEFAULT_CHARSET = 'utf-8'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 if os.environ.get('ENV') == 'PRODUCTION':
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATIC_URL = '/static/'
+    DEBUG = False
+    PROJET_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+    STATIC_ROOT = os.path.join(PROJET_ROOT, 'staticfiles')
     STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
+        os.path.join(PROJET_ROOT, 'static'),
     )
+    STATIC_URL = '/static/'
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+    MEDIA_ROOT = os.path.join(PROJET_ROOT, 'media')
+    MEDIA_URL = '/media/'
+    CKEDITOR_UPLOAD_PATH = "media/"
 
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES['default'].update(db_from_env)
+    print("Production")
 else:
+    DEBUG = False
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATIC_URL = '/static/'
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),
     )
+    STATIC_URL = '/static/'
+    print("Devellopement")
 
-# Path media such as image
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-LOGIN_URL = '/boutique/connexion/'
-CKEDITOR_UPLOAD_PATH = "media/"
+
+    # Path media such as image
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    MEDIA_URL = '/media/'
+    CKEDITOR_UPLOAD_PATH = "media/"
 
 
 # Ckeditor
@@ -196,3 +195,5 @@ CKEDITOR_CONFIGS = {
 }
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+LOGIN_URL = '/boutique/connexion/'
