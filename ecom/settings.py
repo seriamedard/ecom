@@ -31,7 +31,6 @@ MANAGERS = ADMINS
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_interface',
     'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -145,13 +144,10 @@ DEFAULT_CHARSET = 'utf-8'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 if os.environ.get('ENV') == 'PRODUCTION':
-    PROJET_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-    STATIC_ROOT = os.path.join(PROJET_ROOT,'staticfiles')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATIC_URL = '/static/'
-
     STATICFILES_DIRS = (
-        os.path.join(PROJET_ROOT,'static'),
+        os.path.join(BASE_DIR, 'static'),
     )
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
