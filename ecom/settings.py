@@ -15,7 +15,7 @@ SECRET_KEY = 'tbwiiy^g@tb-!z+qu0qhhlqn6_%u+sife#5pl=o385=5=cej&('
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':
-    DEBUG = True
+    DEBUG = False
 else:
     DEBUG = True
 
