@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY','tbwiiy^g@tb-!z+qu0qhhlqn6_%u+sife#5pl=o385=5=cej&(')
 
-ALLOWED_HOSTS = ['127.0.0.1','somae.herokuapp.com','soma-electronic.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','soma-electro.herokuapp.com']
 
 # ADMINS = (
 #         ('asus', 'seria.medard.pge2018@gmail.com'),
