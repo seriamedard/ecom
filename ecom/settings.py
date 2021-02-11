@@ -136,7 +136,7 @@ DEFAULT_CHARSET = 'utf-8'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 if os.environ.get('ENV') == 'PRODUCTION':
-    DEBUG = False
+    DEBUG = True
 
     STATICFILES_STORAGE = 'ecom.storage.WhiteNoiseStaticFilesStorage'
 
