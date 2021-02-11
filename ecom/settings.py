@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'admin_interface',
@@ -136,35 +137,26 @@ DEFAULT_CHARSET = 'utf-8'
 
 if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
-    PROJET_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
-    STATIC_URL = '/static/'
     STATICFILES_STORAGE = 'ecom.storage.WhiteNoiseStaticFilesStorage'
-
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-    MEDIA_URL = '/media/'
-    CKEDITOR_UPLOAD_PATH = "media/"
 
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES['default'].update(db_from_env)
 
 else:
     DEBUG = True
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_DIRS = (
+    STATICFILES_STORAGE = 'ecom.storage.WhiteNoiseStaticFilesStorage'
+    
+# Path media such as image
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+# StaticFiles
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),
     )
-    STATIC_URL = '/static/'
-
-    # Path media such as image
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-    MEDIA_URL = '/media/'
-    CKEDITOR_UPLOAD_PATH = "media/"
-
+STATIC_URL = '/static/'
 
 # Ckeditor
 CKEDITOR_CONFIGS = {
@@ -191,6 +183,8 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+CKEDITOR_UPLOAD_PATH = "media/"
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 

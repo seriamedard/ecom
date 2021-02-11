@@ -1,0 +1,50 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+p {
+    line-height: 1.4;
+}
+
+.container {
+    background: rgb(0, 0, 0);
+    opacity: 0.8;
+    height: 100vh;
+    padding: 25px 30px;
+}
+
+.navbar {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.bar {
+    background: tomato;
+    height: 3px;
+    width: 100ù;
+}
+
+.navbar .abonne {
+    font-size: 1.5em;
+    font-family: 'ubuntu', sans-serif;
+}
+
+.navbar img {
+    height: 45px;
+    width: 50px;
+    margin-right: 15px;
+}
+
+.name {
+    font-size: 1.3em;
+}
