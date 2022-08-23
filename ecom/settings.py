@@ -10,9 +10,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY','tbwiiy^g@tb-!z+qu0qhhlqn6_%u+sife#5pl=o385=5=cej&(')
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY', 'tbwiiy^g@tb-!z+qu0qhhlqn6_%u+sife#5pl=o385=5=cej&(')
 
-ALLOWED_HOSTS = ['127.0.0.1','soma-electro.herokuapp.com']
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", '127.0.0.1').split(" ")
 
 # ADMINS = (
 #         ('asus', 'seria.medard.pge2018@gmail.com'),
@@ -72,7 +73,7 @@ TEMPLATES = [
         },
     },
 ]
-
+ 
 WSGI_APPLICATION = 'ecom.wsgi.application'
 
 # Database
@@ -80,8 +81,12 @@ WSGI_APPLICATION = 'ecom.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': os.environ.get("SQL_ENGINE", 'django.db.backends.sqlite3'),
+        'NAME': os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': os.environ.get("SQL_USER", "user"),
+        'PASSWORD': os.environ.get("SQL_PASSWORD", 'password'),
+        'HOST': os.environ.get("SQL_HOST", "localhost"),
+        'PORT': os.environ.get("SQL_PORT", "5432"),
     }
 }
 
@@ -135,18 +140,10 @@ DEFAULT_CHARSET = 'utf-8'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-if os.environ.get('ENV') == 'PRODUCTION':
-    DEBUG = True
 
-    STATICFILES_STORAGE = 'ecom.storage.WhiteNoiseStaticFilesStorage'
+DEBUG = os.environ.get("DEBUG", True)
+STATICFILES_STORAGE = 'ecom.storage.WhiteNoiseStaticFilesStorage'
 
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
-
-else:
-    DEBUG = True
-    STATICFILES_STORAGE = 'ecom.storage.WhiteNoiseStaticFilesStorage'
-    
 # Path media such as image
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -154,8 +151,8 @@ MEDIA_URL = '/media/'
 # StaticFiles
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
+    os.path.join(BASE_DIR, 'static'),
+)
 STATIC_URL = '/static/'
 
 # Ckeditor
