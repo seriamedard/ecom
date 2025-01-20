@@ -80,15 +80,9 @@ WSGI_APPLICATION = 'ecom.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-else:
+if os.environ.get("DJANGO_ENV") == 'production':
+    print('je suis en production')
+    
     DATABASES = {
         'default': dj_database_url.config(
             default=os.environ.get('DATABASE_URL'))
@@ -97,8 +91,25 @@ else:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+
     ALLOWED_HOSTS = ['somma-electronic-0023d7028e18.herokuapp.com',
+                     '*.somma-electronic-0023d7028e18.herokuapp.com'',
                      'www.somma-electronic-0023d7028e18.herokuapp.com',]
+
+    CSRF_TRUSTED_ORIGINS = [
+        'https://www.somma-electronic-0023d7028e18.herokuapp.com',
+        'https://somma-electronic-0023d7028e18.herokuapp.com',
+    ]
+else:
+    print('je suis en developpement')
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
