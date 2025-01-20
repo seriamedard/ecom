@@ -93,7 +93,7 @@ if os.environ.get("DJANGO_ENV") == 'production':
     CSRF_COOKIE_SECURE = True
 
     ALLOWED_HOSTS = ['somma-electronic-0023d7028e18.herokuapp.com',
-                     '*.somma-electronic-0023d7028e18.herokuapp.com'',
+                     '*.somma-electronic-0023d7028e18.herokuapp.com',
                      'www.somma-electronic-0023d7028e18.herokuapp.com',]
 
     CSRF_TRUSTED_ORIGINS = [
