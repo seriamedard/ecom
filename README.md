@@ -60,4 +60,4 @@ Accédez à l'application en direct et explorez ses fonctionnalités à [cette a
 
 ### ✅ Ce projet montre ma compétence en développement web et ma capacité à réaliser des solutions complètes, prêtes pour des environnements réels. Contactez-moi pour discuter de la manière dont je peux contribuer à vos projets.
 
-[![Medard Geo on X](https://upload.wikimedia.org/wikipedia/commons/6/60/X_logo.svg)](https://x.com/medard_geo)
+[![Medard Geo on X](https://img.icons8.com/ios-filled/50/twitterx--v1.png)](https://x.com/medard_geo)
