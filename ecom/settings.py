@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'ecom.wsgi.application'
 
 if os.environ.get("DJANGO_ENV") == 'production':
     print('je suis en production')
-    
+    DEBUG = False
     DATABASES = {
         'default': dj_database_url.config(
             default=os.environ.get('DATABASE_URL'))
