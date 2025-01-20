@@ -13,7 +13,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get(
     'SECRET_KEY', 'tbwiiy^g@tb-!z+qu0qhhlqn6_%u+sife#5pl=o385=5=cej&(')
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", '127.0.0.1').split(" ")
+
 DEBUG = os.environ.get("DEBUG", True)
 
 # ADMINS = (
@@ -87,6 +87,7 @@ if DEBUG:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 else:
     DATABASES = {
         'default': dj_database_url.config(
@@ -96,6 +97,8 @@ else:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    ALLOWED_HOSTS = ['somma-electronic-0023d7028e18.herokuapp.com',
+                     'www.somma-electronic-0023d7028e18.herokuapp.com',]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
